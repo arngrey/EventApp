@@ -21,3 +21,4 @@
 ![Alt text](/ER_Diagram.svg)
 ## Use-Case Diagram
 ![Alt text](/Use_Case_Diagram.svg)
+## Вид приложения
