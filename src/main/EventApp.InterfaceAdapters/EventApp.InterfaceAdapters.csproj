@@ -9,8 +9,4 @@
     <PackageReference Include="NHibernate" Version="5.3.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EventApp.Abstractions\EventApp.Entities.csproj" />
-  </ItemGroup>
-
 </Project>

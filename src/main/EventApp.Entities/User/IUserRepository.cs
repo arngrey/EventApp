@@ -3,7 +3,7 @@
     /// <summary>
     /// Репозиторий пользователей.
     /// </summary>
-    public interface IUserRepository : IRepository<IUser>
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

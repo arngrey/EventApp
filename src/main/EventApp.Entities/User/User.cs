@@ -1,8 +1,6 @@
-﻿using EventApp.Abstractions.Campaign;
-using EventApp.Abstractions.User;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace EventApp.Models.User
+namespace EventApp.Entities
 {
     /// <inheritdoc/>
     public class User: IUser
@@ -17,6 +15,6 @@ namespace EventApp.Models.User
 
         /// <inheritdoc/>
 
-        public List<ICampaign> JoinedCampaigns { get; set; }
+        public List<Campaign> JoinedCampaigns { get; set; }
     }
 }

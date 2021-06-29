@@ -3,7 +3,7 @@
     /// <summary>
     /// Репозиторий сообщений.
     /// </summary>
-    public interface IMessageRepository : IRepository<IMessage>
+    public interface IMessageRepository : IRepository<Message>
     {
     }
 }

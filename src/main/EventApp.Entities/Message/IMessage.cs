@@ -15,7 +15,7 @@ namespace EventApp.Entities
         /// <summary>
         /// Задаёт или получает пользователя-отправителя сообщения.
         /// </summary>
-        public IUser Sender { get; set; }
+        public User Sender { get; set; }
 
         /// <summary>
         /// Задаёт или получает текст сообщения.

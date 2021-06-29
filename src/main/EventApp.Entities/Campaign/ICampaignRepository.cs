@@ -3,7 +3,7 @@
     /// <summary>
     /// Репозиторий кампаний.
     /// </summary>
-    public interface ICampaignRepository : IRepository<ICampaign>
+    public interface ICampaignRepository : IRepository<Campaign>
     {
     }
 }

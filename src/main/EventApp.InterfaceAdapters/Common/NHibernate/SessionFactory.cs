@@ -1,6 +1,8 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
+using NHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
 using System.Reflection;
 
 namespace EventApp.InterfaceAdapters
@@ -16,8 +18,16 @@ namespace EventApp.InterfaceAdapters
                         .InMemory()
                 )
                 .Mappings(m => m.FluentMappings
-                    .AddFromAssembly(Assembly.GetExecutingAssembly()))
+                    .AddFromAssembly(Assembly.GetExecutingAssembly())
+                )
+                .ExposeConfiguration(BuildSchema)
                 .BuildSessionFactory();
+        }
+
+        private static void BuildSchema(Configuration config)
+        {
+            new SchemaExport(config)
+              .Create(false, true);
         }
     }
 }

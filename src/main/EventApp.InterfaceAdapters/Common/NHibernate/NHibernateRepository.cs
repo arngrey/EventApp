@@ -1,6 +1,5 @@
 ﻿using EventApp.Entities;
 using NHibernate;
-using System;
 using System.Collections.Generic;
 
 namespace EventApp.InterfaceAdapters

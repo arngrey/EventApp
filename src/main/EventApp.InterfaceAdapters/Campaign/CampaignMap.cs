@@ -6,10 +6,12 @@ namespace EventApp.InterfaceAdapters
     /// <summary>
     /// Сопоставление полей DTO и полей сущности кампания.
     /// </summary>
-    public class CampaignMap: ClassMap<ICampaign>
+    public class CampaignMap: ClassMap<Campaign>
     {
         public CampaignMap()
         {
+            Not.LazyLoad();
+
             Id(x => x.Id);
             Map(x => x.Name);
             HasManyToMany(x => x.Hobbies)

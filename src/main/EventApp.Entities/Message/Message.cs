@@ -9,7 +9,7 @@ namespace EventApp.Entities
         public long? Id { get; set; }
 
         /// <inheritdoc/>
-        public IUser Sender { get; set; }
+        public User Sender { get; set; }
 
         /// <inheritdoc/>
         public string Text { get; set; }

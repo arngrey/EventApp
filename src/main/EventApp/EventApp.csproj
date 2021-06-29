@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventApp.Abstractions\EventApp.Entities.csproj" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.114.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EventApp.InterfaceAdapters\EventApp.InterfaceAdapters.csproj" />
     <ProjectReference Include="..\EventApp.UseCases\EventApp.UseCases.csproj" />
   </ItemGroup>
