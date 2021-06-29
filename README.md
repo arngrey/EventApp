@@ -18,10 +18,10 @@
 - Пользователь может присоединяться к нескольким кампаниям.
 - Любой пользователь, находящийся в кампании, может оставлять в ней сколько угодно сообщений.
 ## Entity Relation Diagram
-![Alt text](/ER_Diagram.svg)
+![Alt text](/src/docs/ER_Diagram.svg)
 ## Use-Case Diagram
-![Alt text](/Use_Case_Diagram.svg)
+![Alt text](/src/docs/Use_Case_Diagram.svg)
 ## Вид приложения
 Клиент-серверное SPA web-приложение.
 ## Class diagram
-![Alt text](/Class_Diagram.svg)
+![Alt text](/src/docs/Class_Diagram.svg)
