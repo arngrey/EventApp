@@ -1,6 +1,4 @@
-﻿using EventApp.Abstractions.Common;
-
-namespace EventApp.Abstractions.User
+﻿namespace EventApp.Entities
 {
     /// <summary>
     /// Репозиторий пользователей.

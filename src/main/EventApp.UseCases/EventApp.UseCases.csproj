@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventApp.Abstractions\EventApp.Abstractions.csproj" />
-    <ProjectReference Include="..\EventApp.Models\EventApp.Models.csproj" />
+    <ProjectReference Include="..\EventApp.Abstractions\EventApp.Entities.csproj" />
   </ItemGroup>
 
 </Project>

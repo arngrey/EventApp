@@ -1,7 +1,6 @@
-﻿using EventApp.Abstractions.User;
-using System;
+﻿using System;
 
-namespace EventApp.Abstractions.Message
+namespace EventApp.Entities
 {
     /// <summary>
     /// Сообщение.

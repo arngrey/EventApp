@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EventApp.Abstractions\EventApp.Entities.csproj" />
+    <ProjectReference Include="..\EventApp.InterfaceAdapters\EventApp.InterfaceAdapters.csproj" />
+    <ProjectReference Include="..\EventApp.UseCases\EventApp.UseCases.csproj" />
+  </ItemGroup>
+
 </Project>

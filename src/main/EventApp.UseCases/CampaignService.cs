@@ -1,9 +1,4 @@
-﻿using EventApp.Abstractions.Campaign;
-using EventApp.Abstractions.Hobby;
-using EventApp.Abstractions.Message;
-using EventApp.Abstractions.User;
-using EventApp.Models.Campaign;
-using EventApp.Models.Message;
+﻿using EventApp.Entities;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -72,6 +67,40 @@ namespace EventApp.UseCases
             };
 
             _campaignRepository.Save(newCampaign);
+        }
+
+        /// <summary>
+        /// Добавить участника в кампанию.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="campaignId">Идентификатор кампании.</param>
+        public void AddParticipant(long userId, long campaignId)
+        {
+            var user = _userRepository.GetById(userId);
+
+            if (user == null)
+            {
+                // Не найден пользователь по идентификатору
+                return;
+            }
+
+            var campaign = _campaignRepository.GetById(campaignId);
+
+            if (campaign == null)
+            {
+                // Не найденa кампания по идентификатору
+                return;
+            }
+
+            if (campaign.Participants.Contains(user))
+            {
+                // Пользователь уже состоит в кампании
+                return;
+            }
+
+            campaign.Participants.Add(user);
+
+            _campaignRepository.Save(campaign);
         }
 
         /// <summary>

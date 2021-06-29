@@ -1,7 +1,6 @@
-﻿using EventApp.Abstractions.Campaign;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace EventApp.Abstractions.User
+namespace EventApp.Entities
 {
     /// <summary>
     /// Пользователь.

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace EventApp.Abstractions.Common
+namespace EventApp.Entities
 {
     /// <summary>
     /// Репозиторий.
     /// </summary>
     /// <typeparam name="T">Тип модели.</typeparam>
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
         /// <summary>
         /// Получить сущность по идентификатору.

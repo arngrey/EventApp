@@ -1,6 +1,4 @@
-﻿using EventApp.Abstractions.Common;
-
-namespace EventApp.Abstractions.Hobby
+﻿namespace EventApp.Entities
 {
     /// <summary>
     /// Репозиторий хобби.

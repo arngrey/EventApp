@@ -1,6 +1,4 @@
-﻿using EventApp.Abstractions.Common;
-
-namespace EventApp.Abstractions.Campaign
+﻿namespace EventApp.Entities
 {
     /// <summary>
     /// Репозиторий кампаний.

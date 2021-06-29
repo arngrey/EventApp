@@ -1,4 +1,4 @@
-﻿namespace EventApp.Abstractions.Hobby
+﻿namespace EventApp.Entities
 {
     /// <summary>
     /// Хобби.

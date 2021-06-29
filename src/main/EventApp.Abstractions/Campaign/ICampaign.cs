@@ -1,9 +1,6 @@
-﻿using EventApp.Abstractions.Hobby;
-using EventApp.Abstractions.Message;
-using EventApp.Abstractions.User;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace EventApp.Abstractions.Campaign
+namespace EventApp.Entities
 {
     /// <summary>
     /// Кампания.

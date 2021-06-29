@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EventApp.InterfaceAdapters;
+using EventApp.UseCases;
+using System;
 
 namespace EventApp
 {
@@ -6,7 +8,16 @@ namespace EventApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var sessionFactory = SessionFactoryCreator.Create();
+            
+            using (var session = sessionFactory.OpenSession())
+            {
+                var campaignRepository = new NHibernateCampaignRepository(session);
+                var hobbyRepository = new NHibernateHobbyRepository(session);
+                var userRepository = new NHibernateUserRepository(session);
+
+                var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);
+            }
         }
     }
 }

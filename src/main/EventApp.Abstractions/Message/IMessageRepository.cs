@@ -1,6 +1,4 @@
-﻿using EventApp.Abstractions.Common;
-
-namespace EventApp.Abstractions.Message
+﻿namespace EventApp.Entities
 {
     /// <summary>
     /// Репозиторий сообщений.
