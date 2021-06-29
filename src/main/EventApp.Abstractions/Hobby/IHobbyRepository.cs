@@ -3,7 +3,7 @@
     /// <summary>
     /// Репозиторий хобби.
     /// </summary>
-    public interface IHobbyRepository : IRepository<IHobby>
+    public interface IHobbyRepository : IRepository<Hobby>
     {
     }
 }

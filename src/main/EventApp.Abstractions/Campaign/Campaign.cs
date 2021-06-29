@@ -12,15 +12,15 @@ namespace EventApp.Entities
         public string Name { get; set; }
 
         /// <inheritdoc/>
-        public IUser Administrator { get; set; }
+        public User Administrator { get; set; }
 
         /// <inheritdoc/>
-        public List<IHobby> Hobbies { get; set; }
+        public List<Hobby> Hobbies { get; set; }
 
         /// <inheritdoc/>
-        public List<IUser> Participants { get; set; }
+        public List<User> Participants { get; set; }
 
         /// <inheritdoc/>
-        public List<IMessage> Messages { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

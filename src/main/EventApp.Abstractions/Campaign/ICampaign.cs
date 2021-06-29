@@ -20,21 +20,21 @@ namespace EventApp.Entities
         /// <summary>
         /// Задает или возвращает администратора кампании.
         /// </summary>
-        public IUser Administrator { get; set; }
+        public User Administrator { get; set; }
 
         /// <summary>
         /// Задает или получает список хобби, указанных кампании.
         /// </summary>
-        public List<IHobby> Hobbies { get; set; }
+        public List<Hobby> Hobbies { get; set; }
 
         /// <summary>
         /// Задает или получает список участников кампании.
         /// </summary>
-        public List<IUser> Participants { get; set; }
+        public List<User> Participants { get; set; }
 
         /// <summary>
         /// Задает или получает список сообщений кампании.
         /// </summary>
-        public List<IMessage> Messages { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

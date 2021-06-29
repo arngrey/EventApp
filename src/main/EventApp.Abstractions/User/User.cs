@@ -15,6 +15,6 @@ namespace EventApp.Entities
 
         /// <inheritdoc/>
 
-        public List<ICampaign> JoinedCampaigns { get; set; }
+        public List<Campaign> JoinedCampaigns { get; set; }
     }
 }

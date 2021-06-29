@@ -5,22 +5,25 @@ using System.Collections.Generic;
 
 namespace EventApp.UseCases
 {
+    /// <summary>
+    /// Сервис по работе с кампаниями.
+    /// </summary>
     public class CampaignService
     {
         /// <summary>
         /// Репозиторий пользователей.
         /// </summary>
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         /// <summary>
         /// Репозиторий кампаний.
         /// </summary>
-        private ICampaignRepository _campaignRepository;
+        private readonly ICampaignRepository _campaignRepository;
 
         /// <summary>
         /// Репозиторий хобби.
         /// </summary>
-        private IHobbyRepository _hobbyRepository;
+        private readonly IHobbyRepository _hobbyRepository;
 
         public CampaignService(IUserRepository userRepository, ICampaignRepository campaignRepository, IHobbyRepository hobbyRepository)
         {
@@ -62,8 +65,8 @@ namespace EventApp.UseCases
                 Name = name,
                 Administrator = administrator,
                 Hobbies = hobbies,
-                Participants = new List<IUser>(),
-                Messages = new List<IMessage>()
+                Participants = new List<User>(),
+                Messages = new List<Message>()
             };
 
             _campaignRepository.Save(newCampaign);
@@ -150,7 +153,7 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="campaignId">Идентификатор кампании.</param>
         /// <returns>Список сообщений.</returns>
-        public List<IMessage> GetMessages(long campaignId)
+        public List<Message> GetMessages(long campaignId)
         {
             var campaign = _campaignRepository.GetById(campaignId);
 
@@ -166,7 +169,7 @@ namespace EventApp.UseCases
         /// Получить список всех кампаний.
         /// </summary>
         /// <returns>Список кампаний.</returns>
-        public List<ICampaign> GetAllCampaigns()
+        public List<Campaign> GetAllCampaigns()
         {
             return _campaignRepository.GetAll();
         }
