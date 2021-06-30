@@ -25,7 +25,7 @@ namespace EventApp
 
                 var campaignRepository = new NHibernateCampaignRepository(session);
                 var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);
-                campaignService.CreateCampaign(user.Id.Value, "TestCampaign", new List<long> { hobby.Id.Value });
+                campaignService.CreateCampaign(user.Id.Value, "TestCampaign", new List<Guid> { hobby.Id.Value });
             }
         }
     }

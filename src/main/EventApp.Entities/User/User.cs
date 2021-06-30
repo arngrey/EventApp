@@ -2,19 +2,19 @@
 
 namespace EventApp.Entities
 {
-    /// <inheritdoc/>
-    public class User: IUser
+    /// <summary>
+    /// Пользователь.
+    /// </summary>
+    public class User: Entity
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Задает или получает имя пользователя.
+        /// </summary>
+        public virtual string Name { get; set; }
 
-        public long? Id { get; set; }
-
-        /// <inheritdoc/>
-
-        public string Name { get; set; }
-
-        /// <inheritdoc/>
-
-        public List<Campaign> JoinedCampaigns { get; set; }
+        /// <summary>
+        /// Задает или получает перечисление кампаний, участником которых является пользователь.
+        /// </summary>
+        public virtual List<Campaign> JoinedCampaigns { get; set; }
     }
 }

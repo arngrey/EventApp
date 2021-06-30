@@ -1,12 +1,13 @@
 ﻿namespace EventApp.Entities
 {
-    /// <inheritdoc/>
-    public class Hobby: IHobby
+    /// <summary>
+    /// Хобби.
+    /// </summary>
+    public class Hobby: Entity
     {
-        /// <inheritdoc/>
-        public long? Id { get; set; }
-
-        /// <inheritdoc/>
-        public string Name { get; set; }
+        /// <summary>
+        /// Задает или получает наименование хобби.
+        /// </summary>
+        public virtual string Name { get; set; }
     }
 }

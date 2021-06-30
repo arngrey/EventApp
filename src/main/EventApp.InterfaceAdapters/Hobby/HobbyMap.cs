@@ -10,8 +10,6 @@ namespace EventApp.InterfaceAdapters
     {
         public HobbyMap()
         {
-            Not.LazyLoad();
-
             Id(x => x.Id);
             Map(x => x.Name);
         }

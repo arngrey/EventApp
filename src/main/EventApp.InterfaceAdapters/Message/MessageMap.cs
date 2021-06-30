@@ -10,8 +10,6 @@ namespace EventApp.InterfaceAdapters
     {
         public MessageMap()
         {
-            Not.LazyLoad();
-
             Id(x => x.Id);
             References(x => x.Sender);
             Map(x => x.Text);

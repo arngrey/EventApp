@@ -38,7 +38,7 @@ namespace EventApp.UseCases
         /// <param name="administratorId">Пользователь-администратор кампании.</param>
         /// <param name="name">Наименование кампании.</param>
         /// <param name="hobbyIds">Список идентификаторов хобби.</param>
-        public void CreateCampaign(long administratorId, string name, List<long> hobbyIds)
+        public void CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
         {
             var administrator = _userRepository.GetById(administratorId);
 
@@ -77,7 +77,7 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public void AddParticipant(long userId, long campaignId)
+        public void AddParticipant(Guid userId, Guid campaignId)
         {
             var user = _userRepository.GetById(userId);
 
@@ -111,7 +111,7 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public void SendMessage(long userId, long campaignId, string text)
+        public void SendMessage(Guid userId, Guid campaignId, string text)
         {
             var user = _userRepository.GetById(userId);
 
@@ -153,7 +153,7 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="campaignId">Идентификатор кампании.</param>
         /// <returns>Список сообщений.</returns>
-        public List<Message> GetMessages(long campaignId)
+        public List<Message> GetMessages(Guid campaignId)
         {
             var campaign = _campaignRepository.GetById(campaignId);
 

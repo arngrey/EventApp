@@ -2,19 +2,24 @@
 
 namespace EventApp.Entities
 {
-    /// <inheritdoc/>
-    public class Message: IMessage
+    /// <summary>
+    /// Сообщение.
+    /// </summary>
+    public class Message: Entity
     {
-        /// <inheritdoc/>
-        public long? Id { get; set; }
+        /// <summary>
+        /// Задаёт или получает пользователя-отправителя сообщения.
+        /// </summary>
+        public virtual User Sender { get; set; }
 
-        /// <inheritdoc/>
-        public User Sender { get; set; }
+        /// <summary>
+        /// Задаёт или получает текст сообщения.
+        /// </summary>
+        public virtual string Text { get; set; }
 
-        /// <inheritdoc/>
-        public string Text { get; set; }
-
-        /// <inheritdoc/>
-        public DateTime Created { get; set; }
+        /// <summary>
+        /// Задаёт или получает дату и время создания сообщения.
+        /// </summary>
+        public virtual DateTime Created { get; set; }
     }
 }

@@ -10,8 +10,6 @@ namespace EventApp.InterfaceAdapters
     {
         public CampaignMap()
         {
-            Not.LazyLoad();
-
             Id(x => x.Id);
             Map(x => x.Name);
             HasManyToMany(x => x.Hobbies)

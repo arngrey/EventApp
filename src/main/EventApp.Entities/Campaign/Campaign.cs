@@ -2,25 +2,34 @@
 
 namespace EventApp.Entities
 {
-    /// <inheritdoc/>
-    public class Campaign: ICampaign
+    /// <summary>
+    /// Кампания.
+    /// </summary>
+    public class Campaign: Entity
     {
-        /// <inheritdoc/>
-        public long? Id { get; set; }
+        /// <summary>
+        /// Задает или получает наименование кампании.
+        /// </summary>
+        public virtual string Name { get; set; }
 
-        /// <inheritdoc/>
-        public string Name { get; set; }
+        /// <summary>
+        /// Задает или получает администратора кампании.
+        /// </summary>
+        public virtual User Administrator { get; set; }
 
-        /// <inheritdoc/>
-        public User Administrator { get; set; }
+        /// <summary>
+        /// Задает или получает список хобби, указанных кампании.
+        /// </summary>
+        public virtual List<Hobby> Hobbies { get; set; }
 
-        /// <inheritdoc/>
-        public List<Hobby> Hobbies { get; set; }
+        /// <summary>
+        /// Задает или получает список участников кампании.
+        /// </summary>
+        public virtual List<User> Participants { get; set; }
 
-        /// <inheritdoc/>
-        public List<User> Participants { get; set; }
-
-        /// <inheritdoc/>
-        public List<Message> Messages { get; set; }
+        /// <summary>
+        /// Задает или получает список сообщений кампании.
+        /// </summary>
+        public virtual List<Message> Messages { get; set; }
     }
 }

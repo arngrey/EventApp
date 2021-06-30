@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EventApp.Entities
 {
@@ -6,14 +7,14 @@ namespace EventApp.Entities
     /// Репозиторий.
     /// </summary>
     /// <typeparam name="T">Тип модели.</typeparam>
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : Entity
     {
         /// <summary>
         /// Получить сущность по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns></returns>
-        public T GetById(long id);
+        public T GetById(Guid id);
 
         /// <summary>
         /// Получить все сущности.

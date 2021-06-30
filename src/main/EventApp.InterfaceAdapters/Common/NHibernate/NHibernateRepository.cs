@@ -1,5 +1,6 @@
 ﻿using EventApp.Entities;
 using NHibernate;
+using System;
 using System.Collections.Generic;
 
 namespace EventApp.InterfaceAdapters
@@ -8,7 +9,7 @@ namespace EventApp.InterfaceAdapters
     /// Репозиторий, реализуемый NHibernate'ом.
     /// </summary>
     /// <typeparam name="T">Тип сущности.</typeparam>
-    public class NHibernateRepository<T> where T : class
+    public class NHibernateRepository<T> : IRepository<T> where T : Entity
     {
         /// <summary>
         /// Открытая сессия работы в БД.
@@ -28,7 +29,7 @@ namespace EventApp.InterfaceAdapters
         }
 
         /// <inheritdoc cref="IRepository{T}.GetById"/>
-        public T GetById(long id)
+        public T GetById(Guid id)
         {
             return _session.Get<T>(id);
         }
