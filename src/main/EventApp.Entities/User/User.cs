@@ -15,6 +15,6 @@ namespace EventApp.Entities
         /// <summary>
         /// Задает или получает перечисление кампаний, участником которых является пользователь.
         /// </summary>
-        public virtual List<Campaign> JoinedCampaigns { get; set; }
+        public virtual IList<Campaign> JoinedCampaigns { get; set; }
     }
 }

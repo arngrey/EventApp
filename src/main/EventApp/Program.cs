@@ -13,15 +13,15 @@ namespace EventApp
             
             using (var session = sessionFactory.OpenSession())
             {
-                var userRepository = new NHibernateUserRepository(session);
-                var userService = new UserService(userRepository);
-                userService.CreateUser("TestUser");
-                var user = userService.GetUserByName("TestUser");
-
                 var hobbyRepository = new NHibernateHobbyRepository(session);
                 var hobbyService = new HobbyService(hobbyRepository);
                 hobbyService.CreateHobby("TestHobby");
                 var hobby = hobbyService.GetHobbyByName("TestHobby");
+
+                var userRepository = new NHibernateUserRepository(session);
+                var userService = new UserService(userRepository);
+                userService.CreateUser("TestUser");
+                var user = userService.GetUserByName("TestUser");
 
                 var campaignRepository = new NHibernateCampaignRepository(session);
                 var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);

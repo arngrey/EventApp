@@ -20,16 +20,16 @@ namespace EventApp.Entities
         /// <summary>
         /// Задает или получает список хобби, указанных кампании.
         /// </summary>
-        public virtual List<Hobby> Hobbies { get; set; }
+        public virtual IList<Hobby> Hobbies { get; set; }
 
         /// <summary>
         /// Задает или получает список участников кампании.
         /// </summary>
-        public virtual List<User> Participants { get; set; }
+        public virtual IList<User> Participants { get; set; }
 
         /// <summary>
         /// Задает или получает список сообщений кампании.
         /// </summary>
-        public virtual List<Message> Messages { get; set; }
+        public virtual IList<Message> Messages { get; set; }
     }
 }

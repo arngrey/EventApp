@@ -162,7 +162,7 @@ namespace EventApp.UseCases
                 // Не найденa кампания по идентификатору
             }
 
-            return campaign.Messages;
+            return campaign.Messages.ToList();
         }
 
         /// <summary>

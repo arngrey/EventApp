@@ -2,6 +2,7 @@
 using NHibernate;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EventApp.InterfaceAdapters
 {
@@ -25,7 +26,8 @@ namespace EventApp.InterfaceAdapters
         public List<T> GetAll()
         {
             return _session.QueryOver<T>()
-                .List<T>() as List<T>;
+                .List<T>()
+                .ToList();
         }
 
         /// <inheritdoc cref="IRepository{T}.GetById"/>
@@ -38,6 +40,7 @@ namespace EventApp.InterfaceAdapters
         public void Save(T entity)
         {
             _session.Save(entity);
+            _session.Flush();
         }
     }
 }

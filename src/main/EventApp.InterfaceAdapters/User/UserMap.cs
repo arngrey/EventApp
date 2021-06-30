@@ -10,7 +10,7 @@ namespace EventApp.InterfaceAdapters
     {
         public UserMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).GeneratedBy.GuidComb();
             Map(x => x.Name);
             HasManyToMany(x => x.JoinedCampaigns)
                 .Table("CampaignParticipant");
