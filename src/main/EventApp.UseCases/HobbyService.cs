@@ -1,4 +1,5 @@
-﻿using EventApp.Entities;
+﻿using CSharpFunctionalExtensions;
+using EventApp.Entities;
 using System.Linq;
 
 namespace EventApp.UseCases
@@ -22,20 +23,18 @@ namespace EventApp.UseCases
         /// Создание нового хобби.
         /// </summary>
         /// <param name="name">Наименование хобби.</param>
-        public void CreateHobby(string name)
+        public Result CreateHobby(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                // Наименовани хобби обязательно
-                return;
+                return Result.Failure("Наименовани хобби обязательно.");
             }
 
             var hobbies = _hobbyRepository.GetAll();
 
             if (hobbies.Any(u => u.Name == name))
             {
-                // Хобби с таким наименованием уже существует
-                return;
+                return Result.Failure("Хобби с таким наименованием уже существует.");
             }
 
             var newHobby = new Hobby
@@ -45,6 +44,8 @@ namespace EventApp.UseCases
             };
 
             _hobbyRepository.Save(newHobby);
+
+            return Result.Success();
         }
 
         /// <summary>
@@ -52,23 +53,22 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="name">Наименование хобби.</param>
         /// <returns></returns>
-        public Hobby GetHobbyByName(string name)
+        public Result<Hobby> GetHobbyByName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                // Наименование хобби обязательно
-                return null;
+                return Result.Failure<Hobby>("Наименование хобби обязательно.");
             }
 
             var hobbies = _hobbyRepository.GetAll();
 
             if (!hobbies.Any(u => u.Name == name))
             {
-                // Хобби с таким наименованием не найдено
-                return null;
+                return Result.Failure<Hobby>("Хобби с таким наименованием не найдено.");
             }
 
-            return hobbies.Find(u => u.Name == name);
+            var result = hobbies.Find(u => u.Name == name);
+            return Result.Success<Hobby>(result);
         }
     }
 }

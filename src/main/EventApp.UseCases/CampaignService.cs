@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using CSharpFunctionalExtensions;
 
 namespace EventApp.UseCases
 {
@@ -38,20 +39,18 @@ namespace EventApp.UseCases
         /// <param name="administratorId">Пользователь-администратор кампании.</param>
         /// <param name="name">Наименование кампании.</param>
         /// <param name="hobbyIds">Список идентификаторов хобби.</param>
-        public void CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
+        public Result CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
         {
             var administrator = _userRepository.GetById(administratorId);
 
             if (administrator == null)
             {
-                // Не найден пользователь по идентификатору
-                return;
+                return Result.Failure("Не найден пользователь по идентификатору.");
             }
 
             if (string.IsNullOrEmpty(name))
             {
-                // Наименование не должно быть пустым
-                return;
+                return Result.Failure("Наименование не должно быть пустым.");
             }
 
             var hobbies = hobbyIds
@@ -70,6 +69,8 @@ namespace EventApp.UseCases
             };
 
             _campaignRepository.Save(newCampaign);
+
+            return Result.Success();
         }
 
         /// <summary>
@@ -77,33 +78,32 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public void AddParticipant(Guid userId, Guid campaignId)
+        public Result AddParticipant(Guid userId, Guid campaignId)
         {
             var user = _userRepository.GetById(userId);
 
             if (user == null)
             {
-                // Не найден пользователь по идентификатору
-                return;
+                return Result.Failure("Не найден пользователь по идентификатору.");
             }
 
             var campaign = _campaignRepository.GetById(campaignId);
 
             if (campaign == null)
             {
-                // Не найденa кампания по идентификатору
-                return;
+                return Result.Failure("Не найденa кампания по идентификатору.");
             }
 
             if (campaign.Participants.Contains(user))
             {
-                // Пользователь уже состоит в кампании
-                return;
+                return Result.Failure("Пользователь уже состоит в кампании.");
             }
 
             campaign.Participants.Add(user);
 
             _campaignRepository.Save(campaign);
+
+            return Result.Success();
         }
 
         /// <summary>
@@ -111,28 +111,25 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public void SendMessage(Guid userId, Guid campaignId, string text)
+        public Result SendMessage(Guid userId, Guid campaignId, string text)
         {
             var user = _userRepository.GetById(userId);
 
             if (user == null)
             {
-                // Не найден пользователь по идентификатору
-                return;
+                return Result.Failure("Не найден пользователь по идентификатору.");
             }
 
             var campaign = _campaignRepository.GetById(campaignId);
 
             if (campaign == null)
             {
-                // Не найденa кампания по идентификатору
-                return;
+                return Result.Failure("Не найденa кампания по идентификатору.");
             }
 
             if (!user.JoinedCampaigns.Contains(campaign))
             {
-                // Пользователь не состоит в кампании
-                return;
+                return Result.Failure("Пользователь не состоит в кампании.");
             }
 
             var newMessage = new Message
@@ -146,6 +143,8 @@ namespace EventApp.UseCases
             campaign.Messages.Add(newMessage);
 
             _campaignRepository.Save(campaign);
+
+            return Result.Success();
         }
 
         /// <summary>
@@ -153,25 +152,28 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="campaignId">Идентификатор кампании.</param>
         /// <returns>Список сообщений.</returns>
-        public List<Message> GetMessages(Guid campaignId)
+        public Result<List<Message>> GetMessages(Guid campaignId)
         {
             var campaign = _campaignRepository.GetById(campaignId);
 
             if (campaign == null)
             {
-                // Не найденa кампания по идентификатору
+                return Result.Failure<List<Message>>("Не найденa кампания по идентификатору.");
             }
 
-            return campaign.Messages.ToList();
+            var result = campaign.Messages.ToList();
+
+            return Result.Success<List<Message>>(result);
         }
 
         /// <summary>
         /// Получить список всех кампаний.
         /// </summary>
         /// <returns>Список кампаний.</returns>
-        public List<Campaign> GetAllCampaigns()
+        public Result<List<Campaign>> GetAllCampaigns()
         {
-            return _campaignRepository.GetAll();
+            var result = _campaignRepository.GetAll();
+            return Result.Success<List<Campaign>>(result);
         }
     }
 }

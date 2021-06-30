@@ -1,4 +1,5 @@
-﻿using EventApp.Entities;
+﻿using CSharpFunctionalExtensions;
+using EventApp.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,20 +24,18 @@ namespace EventApp.UseCases
         /// Создать нового пользователя.
         /// </summary>
         /// <param name="name">Имя пользователя.</param>
-        public void CreateUser(string name)
+        public Result CreateUser(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                // Имя пользователя обязательно
-                return;
+                return Result.Failure("Имя пользователя обязательно.");
             }
 
             var users = _userRepository.GetAll();
 
             if (users.Any(u => u.Name == name))
             {
-                // Пользователь с таким именем уже существует
-                return;
+                return Result.Failure("Пользователь с таким именем уже существует.");
             }
 
             var newUser = new User
@@ -47,6 +46,8 @@ namespace EventApp.UseCases
             };
 
             _userRepository.Save(newUser);
+
+            return Result.Success();
         }
 
         /// <summary>
@@ -54,23 +55,23 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="name">Имя пользователя.</param>
         /// <returns></returns>
-        public User GetUserByName(string name)
+        public Result<User> GetUserByName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                // Имя пользователя обязательно
-                return null;
+                return Result.Failure<User>("Имя пользователя обязательно.");
             }
 
             var users = _userRepository.GetAll();
 
             if (!users.Any(u => u.Name == name))
             {
-                // Пользователь с таким именем не найден
-                return null;
+                return Result.Failure<User>("Пользователь с таким именем не найден.");
             }
 
-            return users.Find(u => u.Name == name);
+            var result = users.Find(u => u.Name == name);
+
+            return Result.Success<User>(result);
         }
     }
 }
