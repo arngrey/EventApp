@@ -36,6 +36,7 @@ namespace EventApp.UseCases.Tests
             var result = sut.CreateUser("NewUser");
 
             result.IsSuccess.Should().Be(true);
+            result.Value.Should().NotBeEmpty();
             A.CallTo(() => _fakeUserRepository.Save(A<User>.Ignored)).MustHaveHappenedOnceExactly();
         }
 

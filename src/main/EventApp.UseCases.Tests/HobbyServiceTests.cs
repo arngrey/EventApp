@@ -36,6 +36,7 @@ namespace EventApp.UseCases.Tests
             var result = sut.CreateHobby("NewHobby");
 
             result.IsSuccess.Should().Be(true);
+            result.Value.Should().NotBeEmpty();
             A.CallTo(() => _fakeHobbyRepository.Save(A<Hobby>.Ignored)).MustHaveHappenedOnceExactly();
         }
 

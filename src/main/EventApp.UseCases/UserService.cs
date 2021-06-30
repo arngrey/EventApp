@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using EventApp.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,30 +25,31 @@ namespace EventApp.UseCases
         /// Создать нового пользователя.
         /// </summary>
         /// <param name="name">Имя пользователя.</param>
-        public Result CreateUser(string name)
+        /// <returns>Идентификатор созданного пользователя.</returns>
+        public Result<Guid> CreateUser(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                return Result.Failure("Имя пользователя обязательно.");
+                return Result.Failure<Guid>("Имя пользователя обязательно.");
             }
 
             var users = _userRepository.GetAll();
 
             if (users.Any(u => u.Name == name))
             {
-                return Result.Failure("Пользователь с таким именем уже существует.");
+                return Result.Failure<Guid>("Пользователь с таким именем уже существует.");
             }
 
             var newUser = new User
             {
-                Id = null,
+                Id = Guid.NewGuid(),
                 Name = name,
                 JoinedCampaigns = new List<Campaign>()
             };
 
             _userRepository.Save(newUser);
 
-            return Result.Success();
+            return Result.Success(newUser.Id);
         }
 
         /// <summary>

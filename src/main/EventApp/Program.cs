@@ -15,17 +15,15 @@ namespace EventApp
             {
                 var hobbyRepository = new NHibernateHobbyRepository(session);
                 var hobbyService = new HobbyService(hobbyRepository);
-                hobbyService.CreateHobby("TestHobby");
-                var hobby = hobbyService.GetHobbyByName("TestHobby").Value;
+                var hobbyId = hobbyService.CreateHobby("TestHobby").Value;
 
                 var userRepository = new NHibernateUserRepository(session);
                 var userService = new UserService(userRepository);
-                userService.CreateUser("TestUser");
-                var user = userService.GetUserByName("TestUser").Value;
+                var userId = userService.CreateUser("TestUser").Value;
 
                 var campaignRepository = new NHibernateCampaignRepository(session);
                 var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);
-                campaignService.CreateCampaign(user.Id.Value, "TestCampaign", new List<Guid> { hobby.Id.Value });
+                var campignId = campaignService.CreateCampaign(userId, "TestCampaign", new List<Guid> { hobbyId }).Value;
             }
         }
     }

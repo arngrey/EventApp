@@ -39,18 +39,19 @@ namespace EventApp.UseCases
         /// <param name="administratorId">Пользователь-администратор кампании.</param>
         /// <param name="name">Наименование кампании.</param>
         /// <param name="hobbyIds">Список идентификаторов хобби.</param>
-        public Result CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
+        /// <returns>Идентификатор созданной кампании.</returns>
+        public Result<Guid> CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
         {
             var administrator = _userRepository.GetById(administratorId);
 
             if (administrator == null)
             {
-                return Result.Failure("Не найден пользователь по идентификатору.");
+                return Result.Failure<Guid>("Не найден пользователь по идентификатору.");
             }
 
             if (string.IsNullOrEmpty(name))
             {
-                return Result.Failure("Наименование не должно быть пустым.");
+                return Result.Failure<Guid>("Наименование не должно быть пустым.");
             }
 
             var hobbies = hobbyIds
@@ -60,7 +61,7 @@ namespace EventApp.UseCases
 
             var newCampaign = new Campaign
             {
-                Id = null,
+                Id = Guid.NewGuid(),
                 Name = name,
                 Administrator = administrator,
                 Hobbies = hobbies,
@@ -70,7 +71,7 @@ namespace EventApp.UseCases
 
             _campaignRepository.Save(newCampaign);
 
-            return Result.Success();
+            return Result.Success(newCampaign.Id);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace EventApp.UseCases
 
             var newMessage = new Message
             {
-                Id = null,
+                Id = Guid.NewGuid(),
                 Sender = user,
                 Text = text,
                 Created = DateTime.Now
