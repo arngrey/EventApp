@@ -3,6 +3,7 @@ using EventApp.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventApp.UseCases
 {
@@ -26,14 +27,14 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="name">Имя пользователя.</param>
         /// <returns>Идентификатор созданного пользователя.</returns>
-        public Result<Guid> CreateUser(string name)
+        public async Task<Result<Guid>> CreateUserAsync(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return Result.Failure<Guid>("Имя пользователя обязательно.");
             }
 
-            var users = _userRepository.GetAll();
+            var users = await _userRepository.GetAllAsync();
 
             if (users.Any(u => u.Name == name))
             {
@@ -47,33 +48,9 @@ namespace EventApp.UseCases
                 JoinedCampaigns = new List<Campaign>()
             };
 
-            _userRepository.Save(newUser);
+            await _userRepository.SaveAsync(newUser);
 
             return Result.Success(newUser.Id);
-        }
-
-        /// <summary>
-        /// Получить пользователя по имени.
-        /// </summary>
-        /// <param name="name">Имя пользователя.</param>
-        /// <returns></returns>
-        public Result<User> GetUserByName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return Result.Failure<User>("Имя пользователя обязательно.");
-            }
-
-            var users = _userRepository.GetAll();
-
-            if (!users.Any(u => u.Name == name))
-            {
-                return Result.Failure<User>("Пользователь с таким именем не найден.");
-            }
-
-            var result = users.Find(u => u.Name == name);
-
-            return Result.Success<User>(result);
         }
     }
 }

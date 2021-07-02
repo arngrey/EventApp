@@ -30,10 +30,10 @@ namespace EventApp.UseCases.Tests
 
         [Test]
         [Description("Должен уметь создавать новое хобби.")]
-        public void CanCreateHobbyTest()
+        public async void CanCreateHobbyTest()
         {
             var sut = new HobbyService(_fakeHobbyRepository);
-            var result = sut.CreateHobby("NewHobby");
+            var result = await sut.CreateHobbyAsync("NewHobby");
 
             result.IsSuccess.Should().Be(true);
             result.Value.Should().NotBeEmpty();
@@ -42,34 +42,13 @@ namespace EventApp.UseCases.Tests
 
         [Test]
         [Description("Не должен создавать хобби с одинаковыми названиями.")]
-        public void CantCreateHobbyWithExistingNameTest()
+        public async void CantCreateHobbyWithExistingNameTest()
         {
             var sut = new HobbyService(_fakeHobbyRepository);
-            var result = sut.CreateHobby("ExistingHobby");
+            var result = await sut.CreateHobbyAsync("ExistingHobby");
 
             result.IsFailure.Should().Be(true);
             A.CallTo(() => _fakeHobbyRepository.Save(A<Hobby>.Ignored)).MustNotHaveHappened();
-        }
-
-        [Test]
-        [Description("Должен уметь получать хобби по имени.")]
-        public void CanGetHobbyByNameTest()
-        {
-            var sut = new HobbyService(_fakeHobbyRepository);
-            var result = sut.GetHobbyByName("ExistingHobby");
-
-            result.IsSuccess.Should().Be(true);
-            result.Value.Should().Be(_existingHobby);
-        }
-
-        [Test]
-        [Description("Не должен возвращать несуществующее хобби.")]
-        public void CantGetNonExistingHobbyTest()
-        {
-            var sut = new HobbyService(_fakeHobbyRepository);
-            var result = sut.GetHobbyByName("NonExistingHobby");
-
-            result.IsFailure.Should().Be(true);
         }
     }
 }

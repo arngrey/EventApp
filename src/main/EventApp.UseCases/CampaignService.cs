@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
+using System.Threading.Tasks;
 
 namespace EventApp.UseCases
 {
@@ -40,9 +41,9 @@ namespace EventApp.UseCases
         /// <param name="name">Наименование кампании.</param>
         /// <param name="hobbyIds">Список идентификаторов хобби.</param>
         /// <returns>Идентификатор созданной кампании.</returns>
-        public Result<Guid> CreateCampaign(Guid administratorId, string name, List<Guid> hobbyIds)
+        public async Task<Result<Guid>> CreateCampaignAsync(Guid administratorId, string name, List<Guid> hobbyIds)
         {
-            var administrator = _userRepository.GetById(administratorId);
+            var administrator = await _userRepository.GetByIdAsync(administratorId);
 
             if (administrator == null)
             {
@@ -69,7 +70,7 @@ namespace EventApp.UseCases
                 Messages = new List<Message>()
             };
 
-            _campaignRepository.Save(newCampaign);
+            await _campaignRepository.SaveAsync(newCampaign);
 
             return Result.Success(newCampaign.Id);
         }
@@ -79,16 +80,16 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public Result AddParticipant(Guid userId, Guid campaignId)
+        public async Task<Result> AddParticipantAsync(Guid userId, Guid campaignId)
         {
-            var user = _userRepository.GetById(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
 
             if (user == null)
             {
                 return Result.Failure("Не найден пользователь по идентификатору.");
             }
 
-            var campaign = _campaignRepository.GetById(campaignId);
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId);
 
             if (campaign == null)
             {
@@ -102,7 +103,7 @@ namespace EventApp.UseCases
 
             campaign.Participants.Add(user);
 
-            _campaignRepository.Save(campaign);
+            await _campaignRepository.SaveAsync(campaign);
 
             return Result.Success();
         }
@@ -112,16 +113,16 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
         /// <param name="campaignId">Идентификатор кампании.</param>
-        public Result SendMessage(Guid userId, Guid campaignId, string text)
+        public async Task<Result> SendMessageAsync(Guid userId, Guid campaignId, string text)
         {
-            var user = _userRepository.GetById(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
 
             if (user == null)
             {
                 return Result.Failure("Не найден пользователь по идентификатору.");
             }
 
-            var campaign = _campaignRepository.GetById(campaignId);
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId);
 
             if (campaign == null)
             {
@@ -143,7 +144,7 @@ namespace EventApp.UseCases
 
             campaign.Messages.Add(newMessage);
 
-            _campaignRepository.Save(campaign);
+            await _campaignRepository.SaveAsync(campaign);
 
             return Result.Success();
         }
@@ -153,9 +154,9 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="campaignId">Идентификатор кампании.</param>
         /// <returns>Список сообщений.</returns>
-        public Result<List<Message>> GetMessages(Guid campaignId)
+        public async Task<Result<List<Message>>> GetMessagesAsync(Guid campaignId)
         {
-            var campaign = _campaignRepository.GetById(campaignId);
+            var campaign = await _campaignRepository.GetByIdAsync(campaignId);
 
             if (campaign == null)
             {
@@ -171,10 +172,10 @@ namespace EventApp.UseCases
         /// Получить список всех кампаний.
         /// </summary>
         /// <returns>Список кампаний.</returns>
-        public Result<List<Campaign>> GetAllCampaigns()
+        public async Task<Result<IList<Campaign>>> GetAllCampaignsAsync()
         {
-            var result = _campaignRepository.GetAll();
-            return Result.Success<List<Campaign>>(result);
+            var result = await _campaignRepository.GetAllAsync();
+            return Result.Success(result);
         }
     }
 }

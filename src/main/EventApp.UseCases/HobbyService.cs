@@ -2,6 +2,7 @@
 using EventApp.Entities;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventApp.UseCases
 {
@@ -25,14 +26,14 @@ namespace EventApp.UseCases
         /// </summary>
         /// <param name="name">Наименование хобби.</param>
         /// <returns>Идентификатор созданного хобби.</returns>
-        public Result<Guid> CreateHobby(string name)
+        public async Task<Result<Guid>> CreateHobbyAsync(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return Result.Failure<Guid>("Наименовани хобби обязательно.");
             }
 
-            var hobbies = _hobbyRepository.GetAll();
+            var hobbies = await _hobbyRepository.GetAllAsync();
 
             if (hobbies.Any(u => u.Name == name))
             {
@@ -45,32 +46,9 @@ namespace EventApp.UseCases
                 Name = name
             };
 
-            _hobbyRepository.Save(newHobby);
+            await _hobbyRepository.SaveAsync(newHobby);
 
             return Result.Success(newHobby.Id);
-        }
-
-        /// <summary>
-        /// Получить хобби по наименованию.
-        /// </summary>
-        /// <param name="name">Наименование хобби.</param>
-        /// <returns></returns>
-        public Result<Hobby> GetHobbyByName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return Result.Failure<Hobby>("Наименование хобби обязательно.");
-            }
-
-            var hobbies = _hobbyRepository.GetAll();
-
-            if (!hobbies.Any(u => u.Name == name))
-            {
-                return Result.Failure<Hobby>("Хобби с таким наименованием не найдено.");
-            }
-
-            var result = hobbies.Find(u => u.Name == name);
-            return Result.Success<Hobby>(result);
         }
     }
 }

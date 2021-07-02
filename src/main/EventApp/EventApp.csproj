@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventApp.InterfaceAdapters\EventApp.InterfaceAdapters.csproj" />
+    <ProjectReference Include="..\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj" />
     <ProjectReference Include="..\EventApp.UseCases\EventApp.UseCases.csproj" />
   </ItemGroup>
 
