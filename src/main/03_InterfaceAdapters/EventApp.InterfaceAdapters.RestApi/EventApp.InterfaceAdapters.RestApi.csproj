@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventApp.Entities\EventApp.Entities.csproj" />
+    <ProjectReference Include="..\..\01_Entities\EventApp.Entities\EventApp.Entities.csproj" />
+    <ProjectReference Include="..\..\02_UseCases\EventApp.UseCases\EventApp.UseCases.csproj" />
     <ProjectReference Include="..\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj" />
-    <ProjectReference Include="..\EventApp.UseCases\EventApp.UseCases.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

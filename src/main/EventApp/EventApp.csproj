@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj" />
-    <ProjectReference Include="..\EventApp.UseCases\EventApp.UseCases.csproj" />
+    <ProjectReference Include="..\02_UseCases\EventApp.UseCases\EventApp.UseCases.csproj" />
+    <ProjectReference Include="..\03_InterfaceAdapters\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj" />
   </ItemGroup>
 
 </Project>

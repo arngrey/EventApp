@@ -7,7 +7,7 @@ namespace EventApp
 {
     class Program
     {
-        static async void Main(string[] args)
+        static void Main(string[] args)
         {
             var sessionFactory = SessionFactoryCreator.Create();
             
@@ -15,15 +15,15 @@ namespace EventApp
             {
                 var hobbyRepository = new NHibernateHobbyRepository(session);
                 var hobbyService = new HobbyService(hobbyRepository);
-                var hobbyId = (await hobbyService.CreateHobbyAsync("TestHobby")).Value;
+                var hobbyId = hobbyService.CreateHobbyAsync("TestHobby").Result.Value;
 
                 var userRepository = new NHibernateUserRepository(session);
                 var userService = new UserService(userRepository);
-                var userId = (await userService.CreateUserAsync("TestUser")).Value;
+                var userId = userService.CreateUserAsync("TestUser").Result.Value;
 
                 var campaignRepository = new NHibernateCampaignRepository(session);
                 var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);
-                var campignId = (await campaignService.CreateCampaignAsync(userId, "TestCampaign", new List<Guid> { hobbyId })).Value;
+                var campignId = campaignService.CreateCampaignAsync(userId, "TestCampaign", new List<Guid> { hobbyId }).Result.Value;
             }
         }
     }
