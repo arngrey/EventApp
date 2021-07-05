@@ -10,10 +10,11 @@ namespace EventApp.InterfaceAdapters
     {
         public MessageMap()
         {
-            Id(x => x.Id).GeneratedBy.GuidComb();
+            Id(x => x.Id);
             References(x => x.Sender);
             Map(x => x.Text);
-            Map(x => x.Created);
+            Version(x => x.Created);
+            References(x => x.Campaign);
         }
     }
 }

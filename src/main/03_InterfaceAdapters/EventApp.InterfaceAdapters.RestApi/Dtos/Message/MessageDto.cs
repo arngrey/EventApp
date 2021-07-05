@@ -1,30 +1,32 @@
 ﻿using System;
 
-namespace EventApp.Entities
+namespace EventApp.InterfaceAdapters.RestApi.Dtos
 {
-    /// <summary>
-    /// Сообщение.
-    /// </summary>
-    public class Message: Entity
+    public class MessageDto
     {
+        /// <summary>
+        /// Идентификатор сообщения.
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Задаёт или получает пользователя-отправителя сообщения.
         /// </summary>
-        public virtual User Sender { get; set; }
+        public Guid SenderId { get; set; }
 
         /// <summary>
         /// Задаёт или получает кампанию, в которую отправлено сообщение.
         /// </summary>
-        public virtual Campaign Campaign { get; set; }
+        public virtual Guid CampaignId { get; set; }
 
         /// <summary>
         /// Задаёт или получает текст сообщения.
         /// </summary>
-        public virtual string Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Задаёт или получает дату и время создания сообщения.
         /// </summary>
-        public virtual DateTime Created { get; set; }
+        public DateTime Created { get; set; }
     }
 }

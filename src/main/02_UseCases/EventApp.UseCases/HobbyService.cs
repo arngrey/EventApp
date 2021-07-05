@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using EventApp.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,6 +50,16 @@ namespace EventApp.UseCases
             await _hobbyRepository.SaveAsync(newHobby);
 
             return Result.Success(newHobby.Id);
+        }
+
+        /// <summary>
+        /// Получить список всех хобби.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Result<List<Hobby>>> GetAllAsync()
+        {
+            var result = await _hobbyRepository.GetAllAsync();
+            return Result.Success(result.ToList());
         }
     }
 }

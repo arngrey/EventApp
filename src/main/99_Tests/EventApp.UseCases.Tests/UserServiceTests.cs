@@ -4,6 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventApp.UseCases.Tests
 {
@@ -22,33 +23,33 @@ namespace EventApp.UseCases.Tests
                 Name = "ExistingUser"
             };
 
-            var users = new List<User> { _existingUser };
+             var users = (IList<User>)new List<User> { _existingUser };
 
             _fakeUserRepository = A.Fake<IUserRepository>();
-            A.CallTo(() => _fakeUserRepository.GetAll()).Returns(users);
+            A.CallTo(() => _fakeUserRepository.GetAllAsync()).Returns(Task.FromResult(users));
         }
 
         [Test]
         [Description("Должен уметь создавать новго пользователя.")]
-        public async void CanCreateUserTest()
+        public async Task CanCreateUserTest()
         {
             var sut = new UserService(_fakeUserRepository);
             var result = await sut.CreateUserAsync("NewUser");
 
             result.IsSuccess.Should().Be(true);
             result.Value.Should().NotBeEmpty();
-            A.CallTo(() => _fakeUserRepository.Save(A<User>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeUserRepository.SaveAsync(A<User>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Test]
         [Description("Не должен создавать пользователей с одинаковыми именами.")]
-        public async void CantCreateUserWithExistingNameTest()
+        public async Task CantCreateUserWithExistingNameTest()
         {
             var sut = new UserService(_fakeUserRepository);
             var result = await sut.CreateUserAsync("ExistingUser");
 
             result.IsFailure.Should().Be(true);
-            A.CallTo(() => _fakeUserRepository.Save(A<User>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => _fakeUserRepository.SaveAsync(A<User>.Ignored)).MustNotHaveHappened();
         }
     }
 }

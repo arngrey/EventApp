@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace EventApp.InterfaceAdapters.RestApi
 {
@@ -19,6 +20,11 @@ namespace EventApp.InterfaceAdapters.RestApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddMaps(Assembly.GetExecutingAssembly());
+            });
+
             var session = SessionFactoryCreator.Create().OpenSession();
             services.AddSingleton(session);
 

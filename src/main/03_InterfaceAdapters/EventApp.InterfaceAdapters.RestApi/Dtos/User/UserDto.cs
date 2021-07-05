@@ -1,7 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
+using EventApp.Entities;
+using System;
 
 namespace EventApp.InterfaceAdapters.RestApi
 {
+    [AutoMap(typeof(User))]
     public class UserDto
     {
         /// <summary>

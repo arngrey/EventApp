@@ -1,8 +1,6 @@
-﻿using EventApp.Entities;
+﻿using EventApp.InterfaceAdapters.RestApi.Dtos;
 using EventApp.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EventApp.InterfaceAdapters.RestApi.Controllers
@@ -18,27 +16,18 @@ namespace EventApp.InterfaceAdapters.RestApi.Controllers
             _userService = userService;
         }
 
-        public IActionResult InternalServerError { get; private set; }
-
         [Route("new")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(string name)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateUserDto createUserDto)
         {
-            try
-            {
-                var result = await _userService.CreateUserAsync(name);
+            var result = await _userService.CreateUserAsync(createUserDto.Name);
 
-                if (result.IsSuccess)
-                {
-                    return Created($"api/users/{result.Value}", result.Value);
-                }
-
-                return Conflict(result.Error);
-            } catch
+            if (result.IsSuccess)
             {
-                return InternalServerError;
+                return Created($"api/users/{result.Value}", result.Value);
             }
 
+            return Conflict(result.Error);
         }
     }
 }

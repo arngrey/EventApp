@@ -4,6 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventApp.UseCases.Tests
 {
@@ -12,6 +13,7 @@ namespace EventApp.UseCases.Tests
     {
         private IHobbyRepository _fakeHobbyRepository;
         private Hobby _existingHobby;
+        private IList<Hobby> _existingHobbies;
 
         [SetUp]
         public void Setup()
@@ -22,33 +24,44 @@ namespace EventApp.UseCases.Tests
                 Name = "ExistingHobby"
             };
 
-            var hobbies = new List<Hobby> { _existingHobby };
+            _existingHobbies = new List<Hobby> { _existingHobby };
 
             _fakeHobbyRepository = A.Fake<IHobbyRepository>();
-            A.CallTo(() => _fakeHobbyRepository.GetAll()).Returns(hobbies);
+            A.CallTo(() => _fakeHobbyRepository.GetAllAsync()).Returns(Task.FromResult(_existingHobbies));
         }
 
         [Test]
         [Description("Должен уметь создавать новое хобби.")]
-        public async void CanCreateHobbyTest()
+        public async Task CanCreateHobbyTest()
         {
             var sut = new HobbyService(_fakeHobbyRepository);
             var result = await sut.CreateHobbyAsync("NewHobby");
 
             result.IsSuccess.Should().Be(true);
             result.Value.Should().NotBeEmpty();
-            A.CallTo(() => _fakeHobbyRepository.Save(A<Hobby>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeHobbyRepository.SaveAsync(A<Hobby>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Test]
         [Description("Не должен создавать хобби с одинаковыми названиями.")]
-        public async void CantCreateHobbyWithExistingNameTest()
+        public async Task CantCreateHobbyWithExistingNameTest()
         {
             var sut = new HobbyService(_fakeHobbyRepository);
             var result = await sut.CreateHobbyAsync("ExistingHobby");
 
             result.IsFailure.Should().Be(true);
-            A.CallTo(() => _fakeHobbyRepository.Save(A<Hobby>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => _fakeHobbyRepository.SaveAsync(A<Hobby>.Ignored)).MustNotHaveHappened();
+        }
+
+        [Test]
+        [Description("Должен уметь получать список всех хобби.")]
+        public async Task CanGetAllHobbiesTest()
+        {
+            var sut = new HobbyService(_fakeHobbyRepository);
+            var result = await sut.GetAllAsync();
+
+            result.IsSuccess.Should().Be(true);
+            result.Value.Should().Equal(_existingHobbies);
         }
     }
 }

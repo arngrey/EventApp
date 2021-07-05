@@ -41,7 +41,7 @@ namespace EventApp.UseCases
         /// <param name="name">Наименование кампании.</param>
         /// <param name="hobbyIds">Список идентификаторов хобби.</param>
         /// <returns>Идентификатор созданной кампании.</returns>
-        public async Task<Result<Guid>> CreateCampaignAsync(Guid administratorId, string name, List<Guid> hobbyIds)
+        public async Task<Result<Guid>> CreateCampaignAsync(Guid administratorId, string name, IList<Guid> hobbyIds)
         {
             var administrator = await _userRepository.GetByIdAsync(administratorId);
 
@@ -138,6 +138,7 @@ namespace EventApp.UseCases
             {
                 Id = Guid.NewGuid(),
                 Sender = user,
+                Campaign = campaign,
                 Text = text,
                 Created = DateTime.Now
             };
@@ -165,14 +166,14 @@ namespace EventApp.UseCases
 
             var result = campaign.Messages.ToList();
 
-            return Result.Success<List<Message>>(result);
+            return Result.Success(result);
         }
 
         /// <summary>
         /// Получить список всех кампаний.
         /// </summary>
         /// <returns>Список кампаний.</returns>
-        public async Task<Result<IList<Campaign>>> GetAllCampaignsAsync()
+        public async Task<Result<IList<Campaign>>> GetCampaignsAsync()
         {
             var result = await _campaignRepository.GetAllAsync();
             return Result.Success(result);

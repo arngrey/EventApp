@@ -10,7 +10,7 @@ namespace EventApp.InterfaceAdapters
     {
         public HobbyMap()
         {
-            Id(x => x.Id).GeneratedBy.GuidComb();
+            Id(x => x.Id);
             Map(x => x.Name);
         }
     }

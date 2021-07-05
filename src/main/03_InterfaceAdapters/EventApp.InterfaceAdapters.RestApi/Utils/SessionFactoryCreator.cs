@@ -29,8 +29,8 @@ namespace EventApp.InterfaceAdapters
 
         private static void BuildSchema(NHibernate.Cfg.Configuration config)
         {
-            new SchemaExport(config)
-              .Execute(true, true, false);
+            new SchemaUpdate(config)
+              .Execute(true, true);
         }
     }
 }
