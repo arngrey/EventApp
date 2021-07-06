@@ -1,4 +1,5 @@
 using EventApp.Entities;
+using EventApp.InterfaceAdapters.DataStorage;
 using EventApp.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace EventApp.InterfaceAdapters.RestApi
             var session = SessionFactoryCreator.Create().OpenSession();
             services.AddSingleton(session);
 
+            services.AddSingleton<IMessageRepository, NHibernateMessageRepository>();
             services.AddSingleton<IUserRepository, NHibernateUserRepository>();
             services.AddSingleton<IHobbyRepository, NHibernateHobbyRepository>();
             services.AddSingleton<ICampaignRepository, NHibernateCampaignRepository>();

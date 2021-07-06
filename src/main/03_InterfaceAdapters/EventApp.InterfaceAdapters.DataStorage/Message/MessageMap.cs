@@ -1,7 +1,7 @@
 ﻿using EventApp.Entities;
 using FluentNHibernate.Mapping;
 
-namespace EventApp.InterfaceAdapters
+namespace EventApp.InterfaceAdapters.DataStorage
 {
     /// <summary>
     /// Сопоставление полей DTO и полей сущности сообщения.
@@ -13,7 +13,7 @@ namespace EventApp.InterfaceAdapters
             Id(x => x.Id);
             References(x => x.Sender);
             Map(x => x.Text);
-            Version(x => x.Created);
+            Map(x => x.Created);
             References(x => x.Campaign);
         }
     }

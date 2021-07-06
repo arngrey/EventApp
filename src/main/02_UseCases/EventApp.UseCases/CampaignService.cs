@@ -27,11 +27,18 @@ namespace EventApp.UseCases
         /// </summary>
         private readonly IHobbyRepository _hobbyRepository;
 
-        public CampaignService(IUserRepository userRepository, ICampaignRepository campaignRepository, IHobbyRepository hobbyRepository)
+        /// <summary>
+        /// Репозиторий сообщений.
+        /// </summary>
+        private readonly IMessageRepository _messageRepository;
+
+        public CampaignService(IUserRepository userRepository, ICampaignRepository campaignRepository, 
+            IHobbyRepository hobbyRepository, IMessageRepository messageRepository)
         {
             _userRepository = userRepository;
             _campaignRepository = campaignRepository;
             _hobbyRepository = hobbyRepository;
+            _messageRepository = messageRepository;
         }
 
         /// <summary>
@@ -143,9 +150,7 @@ namespace EventApp.UseCases
                 Created = DateTime.Now
             };
 
-            campaign.Messages.Add(newMessage);
-
-            await _campaignRepository.SaveAsync(campaign);
+            await _messageRepository.SaveAsync(newMessage);
 
             return Result.Success();
         }

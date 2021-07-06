@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Cfg;
+﻿using EventApp.InterfaceAdapters.DataStorage;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;

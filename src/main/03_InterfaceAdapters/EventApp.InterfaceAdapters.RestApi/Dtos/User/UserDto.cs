@@ -2,6 +2,7 @@
 using AutoMapper.Configuration.Annotations;
 using EventApp.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace EventApp.InterfaceAdapters.RestApi
 {
@@ -17,5 +18,10 @@ namespace EventApp.InterfaceAdapters.RestApi
         /// Имя пользователя.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Задает или получает перечисление кампаний, участником которых является пользователь.
+        /// </summary>
+        public IList<Guid> JoinedCampaignIds { get; set; }
     }
 }

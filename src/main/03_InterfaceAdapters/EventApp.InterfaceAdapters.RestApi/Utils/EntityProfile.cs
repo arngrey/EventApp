@@ -18,6 +18,9 @@ namespace EventApp.InterfaceAdapters.RestApi.Utils
             CreateMap<Message, MessageDto>()
                 .ForMember(nameof(MessageDto.SenderId), x => x.MapFrom(y => y.Sender.Id))
                 .ForMember(nameof(MessageDto.CampaignId), x => x.MapFrom(y => y.Campaign.Id));
+
+            CreateMap<User, UserDto>()
+                .ForMember(nameof(UserDto.JoinedCampaignIds), x => x.MapFrom(y => y.JoinedCampaigns.Select(x => x.Id)));
         }
     }
 }

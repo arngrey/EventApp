@@ -1,7 +1,7 @@
 ﻿using EventApp.Entities;
 using FluentNHibernate.Mapping;
 
-namespace EventApp.InterfaceAdapters
+namespace EventApp.InterfaceAdapters.DataStorage
 {
     /// <summary>
     /// Сопоставление полей DTO и полей сущности хобби.
