@@ -9,18 +9,18 @@ namespace EventApp.InterfaceAdapters.RestApi.Utils
     {
         public EntityProfile() 
         {
-            CreateMap<Campaign, CampaignDto>()
-                .ForMember(nameof(CampaignDto.AdministratorId), x => x.MapFrom(y => y.Administrator.Id))
-                .ForMember(nameof(CampaignDto.HobbyIds), x => x.MapFrom(y => y.Hobbies.Select(z => z.Id)))
-                .ForMember(nameof(CampaignDto.ParticipantIds), x => x.MapFrom(y => y.Participants.Select(z => z.Id)))
-                .ForMember(nameof(CampaignDto.MessageIds), x => x.MapFrom(y => y.Messages.Select(z => z.Id)));
+            CreateMap<Campaign, FlatCampaignDto>()
+                .ForMember(nameof(FlatCampaignDto.AdministratorId), x => x.MapFrom(y => y.Administrator.Id))
+                .ForMember(nameof(FlatCampaignDto.HobbyIds), x => x.MapFrom(y => y.Hobbies.Select(z => z.Id)))
+                .ForMember(nameof(FlatCampaignDto.ParticipantIds), x => x.MapFrom(y => y.Participants.Select(z => z.Id)))
+                .ForMember(nameof(FlatCampaignDto.MessageIds), x => x.MapFrom(y => y.Messages.Select(z => z.Id)));
 
-            CreateMap<Message, MessageDto>()
-                .ForMember(nameof(MessageDto.SenderId), x => x.MapFrom(y => y.Sender.Id))
-                .ForMember(nameof(MessageDto.CampaignId), x => x.MapFrom(y => y.Campaign.Id));
+            CreateMap<Message, FlatMessageDto>()
+                .ForMember(nameof(FlatMessageDto.SenderId), x => x.MapFrom(y => y.Sender.Id))
+                .ForMember(nameof(FlatMessageDto.CampaignId), x => x.MapFrom(y => y.Campaign.Id));
 
-            CreateMap<User, UserDto>()
-                .ForMember(nameof(UserDto.JoinedCampaignIds), x => x.MapFrom(y => y.JoinedCampaigns.Select(x => x.Id)));
+            CreateMap<User, FlatUserDto>()
+                .ForMember(nameof(FlatUserDto.JoinedCampaignIds), x => x.MapFrom(y => y.JoinedCampaigns.Select(x => x.Id)));
         }
     }
 }

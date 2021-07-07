@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using EventApp.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace EventApp.InterfaceAdapters.RestApi.Dtos
 {
-    [AutoMap(typeof(Campaign))]
-    public class CampaignDto
+    public class FlatCampaignDto
     {
         /// <summary>
         /// Задаёт или получает идентификатор кампании.
@@ -20,21 +17,21 @@ namespace EventApp.InterfaceAdapters.RestApi.Dtos
         /// <summary>
         /// Задает или получает администратора кампании.
         /// </summary>
-        public FlatUserDto Administrator { get; set; }
+        public Guid AdministratorId { get; set; }
 
         /// <summary>
         /// Задает или получает список хобби, указанных кампании.
         /// </summary>
-        public IList<FlatHobbyDto> Hobbies { get; set; }
+        public IList<Guid> HobbyIds { get; set; }
 
         /// <summary>
         /// Задает или получает список участников кампании.
         /// </summary>
-        public IList<FlatUserDto> Participants { get; set; }
+        public IList<Guid> ParticipantIds { get; set; }
 
         /// <summary>
         /// Задает или получает список сообщений кампании.
         /// </summary>
-        public IList<FlatMessageDto> Messages { get; set; }
+        public IList<Guid> MessageIds { get; set; }
     }
 }

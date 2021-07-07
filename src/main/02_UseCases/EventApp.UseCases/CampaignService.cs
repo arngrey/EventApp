@@ -169,7 +169,10 @@ namespace EventApp.UseCases
                 return Result.Failure<List<Message>>("Не найденa кампания по идентификатору.");
             }
 
-            var result = campaign.Messages.ToList();
+            var messages = await _messageRepository.GetAllAsync();
+            var result = messages
+                .Where(message => message.Campaign.Id == campaignId)
+                .ToList();
 
             return Result.Success(result);
         }

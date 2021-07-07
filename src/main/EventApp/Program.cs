@@ -1,4 +1,4 @@
-﻿using EventApp.InterfaceAdapters;
+﻿using EventApp.InterfaceAdapters.DataStorage;
 using EventApp.UseCases;
 using System;
 using System.Collections.Generic;
@@ -21,8 +21,10 @@ namespace EventApp
                 var userService = new UserService(userRepository);
                 var userId = userService.CreateUserAsync("TestUser").Result.Value;
 
+                var messageRepository = new NHibernateMessageRepository(session);
+
                 var campaignRepository = new NHibernateCampaignRepository(session);
-                var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository);
+                var campaignService = new CampaignService(userRepository, campaignRepository, hobbyRepository, messageRepository);
                 var campignId = campaignService.CreateCampaignAsync(userId, "TestCampaign", new List<Guid> { hobbyId }).Result.Value;
             }
         }

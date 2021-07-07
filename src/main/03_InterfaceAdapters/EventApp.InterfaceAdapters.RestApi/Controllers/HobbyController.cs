@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using EventApp.Entities;
 using EventApp.InterfaceAdapters.RestApi.Dtos;
 using EventApp.UseCases;
 using Microsoft.AspNetCore.Mvc;

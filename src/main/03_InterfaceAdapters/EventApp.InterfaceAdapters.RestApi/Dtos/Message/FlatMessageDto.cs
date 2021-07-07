@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using EventApp.Entities;
-using System;
+﻿using System;
 
 namespace EventApp.InterfaceAdapters.RestApi.Dtos
 {
-    [AutoMap(typeof(Message))]
-    public class MessageDto
+    public class FlatMessageDto
     {
         /// <summary>
         /// Идентификатор сообщения.
@@ -15,12 +12,12 @@ namespace EventApp.InterfaceAdapters.RestApi.Dtos
         /// <summary>
         /// Задаёт или получает пользователя-отправителя сообщения.
         /// </summary>
-        public FlatUserDto Sender { get; set; }
+        public Guid SenderId { get; set; }
 
         /// <summary>
         /// Задаёт или получает кампанию, в которую отправлено сообщение.
         /// </summary>
-        public virtual FlatCampaignDto Campaign { get; set; }
+        public virtual Guid CampaignId { get; set; }
 
         /// <summary>
         /// Задаёт или получает текст сообщения.
