@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCampaigns } from './campaignAPI';
+import { fetchCampaigns } from './api';
+import { RootState } from './store';
 
-export interface TableState {
-  data: any;
+export interface AppState {
+  campaigns: any;
 }
 
-const initialState: TableState = {
-  data: []
+const initialState: AppState = {
+  campaigns: []
 };
 
 export const loadCampaignsAsync = createAsyncThunk(
@@ -25,11 +26,13 @@ export const campaignSlice = createSlice({
   initialState,
   reducers: {
     load: (state, action: PayloadAction<any>) => {
-      state.data = action.payload;
+      state.campaigns = action.payload;
     },
   },
 });
 
 export const { load } = campaignSlice.actions;
+
+export const selectCampaigns = (state: RootState) => state.main.campaigns;
 
 export default campaignSlice.reducer;
