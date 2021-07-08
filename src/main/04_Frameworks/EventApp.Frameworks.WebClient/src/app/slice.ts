@@ -21,11 +21,7 @@ export const loadCampaignsAsync = (): AppThunk => async (
   const response = await fetchCampaigns();
   console.log(response.data);
 
-  dispatch(
-    setCampaigns({
-      payload: response.data
-    })
-  )
+  dispatch(setCampaigns(response.data))
 }
 
 export const loadHobbiesAsync = (): AppThunk => async (
@@ -35,11 +31,7 @@ export const loadHobbiesAsync = (): AppThunk => async (
   const response = await fetchHobbies();
   console.log(response.data);
 
-  dispatch(
-    setHobbies({
-      payload: response.data
-    })
-  )
+  dispatch(setHobbies(response.data))
 }
 
 export const loadCampaignMessagesAsync = (campaignId: string): AppThunk => async (
@@ -49,11 +41,7 @@ export const loadCampaignMessagesAsync = (campaignId: string): AppThunk => async
   const response = await fetchCampaignMessages(campaignId);
   console.log(response.data);
 
-  dispatch(
-    setHobbies({
-      payload: response.data
-    })
-  )
+  dispatch(setCampaignMessages(response.data))
 }
 
 export const sendMessageAsync = (userId: string, campaignId: string, text: string): AppThunk => async (
@@ -115,5 +103,7 @@ export const campaignSlice = createSlice({
 export const { setCampaigns, setHobbies, setCampaignMessages } = campaignSlice.actions;
 
 export const selectCampaigns = (state: RootState) => state.main.campaigns;
+export const selectCampaignMessages = (state: RootState) => state.main.campaignMessages;
+export const selectHobbies = (state: RootState) => state.main.hobbies;
 
 export default campaignSlice.reducer;
