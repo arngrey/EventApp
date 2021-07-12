@@ -20,3 +20,10 @@ export const FieldFormTitleContainer = styled.div`
     position: relative;
     margin-bottom: 0.5rem;
 `
+
+export const FieldFormFieldsContainer = styled.div`
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+`

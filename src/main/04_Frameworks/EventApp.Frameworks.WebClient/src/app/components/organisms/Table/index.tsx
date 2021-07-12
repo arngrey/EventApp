@@ -12,6 +12,7 @@ export type TableProps = {
     rowHeight: string;
     headersHeight: string;
     buttonPanel?: CommonButtonPanelProps;
+    onRowClick?: (row: Array<string>) => void;
 }
 
 export const Table: React.FC<TableProps> = (props: TableProps) => {
@@ -38,7 +39,8 @@ export const Table: React.FC<TableProps> = (props: TableProps) => {
                         <TableRow
                             values={row}
                             containerProps={{ height: props.rowHeight }}
-                            key={i}></TableRow>
+                            key={i}
+                            onClick={() => { props.onRowClick && props.onRowClick(row); }}></TableRow>
                     ))
                 }
             </RowsContainer>

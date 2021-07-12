@@ -4,6 +4,7 @@ export const InputFieldContainer = styled.div`
     display: flex;
     position: relative;
     width: 100%;
-    height: inherit;
+    height: fit-content;
     flex-direction: row;
+    align-items: center;
 `

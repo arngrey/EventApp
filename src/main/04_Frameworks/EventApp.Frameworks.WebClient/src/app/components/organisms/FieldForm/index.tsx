@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CommonTitle } from "../../atoms/CommonTitle";
 import { CommonButtonPanel } from "../../molecules/CommonButtonPanel";
 import { InputField } from "../../molecules/InputField";
-import { FieldFormContainer, FieldFormTitleContainer } from "./styles";
+import { FieldFormContainer, FieldFormFieldsContainer, FieldFormTitleContainer } from "./styles";
 
 type InputFieldRecords = Record<string, string>;
 
@@ -27,6 +27,7 @@ export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
                 <CommonTitle 
                     text={props.title} />
             </FieldFormTitleContainer>
+            <FieldFormFieldsContainer>
             {
                 props.inputFields.map((inputField, i) => (
                     <InputField 
@@ -39,6 +40,7 @@ export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
                         }} />
                 ))
             }
+            </FieldFormFieldsContainer>
             <CommonButtonPanel 
                 buttons={[
                     { text: "Ок", onClick: () => { props.onOk(inputFieldRecords) } }, 

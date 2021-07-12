@@ -14,4 +14,6 @@ export const NavigationItemContainer = styled.div`
     position: relative;
     height: 4rem;
     width: 9rem;
+    border: 1px solid grey;
+    border-radius: 0.3rem;
 `

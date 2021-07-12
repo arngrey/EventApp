@@ -10,4 +10,8 @@ export const TableRowContainer = styled.div<TableRowContainerProps>`
     display: flex;
     position: relative;
     flex-direction: row;
+    &:hover {
+        background-color: grey;
+        cursor: pointer;
+    }
 `

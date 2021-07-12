@@ -20,6 +20,7 @@ export const RowsContainer = styled.div`
     flex-direction: column;
     position: relative;
     border: 1px solid black;
+    overflow-y: auto;
 `
 
 export type HeadersContainerProps = {
