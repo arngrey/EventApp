@@ -11,7 +11,7 @@ namespace EventApp.UseCases.Tests
     [TestFixture]
     public class HobbyServiceTests
     {
-        private IHobbyRepository _fakeHobbyRepository;
+        private IRepository<Hobby> _fakeHobbyRepository;
         private Hobby _existingHobby;
         private IList<Hobby> _existingHobbies;
 
@@ -26,7 +26,7 @@ namespace EventApp.UseCases.Tests
 
             _existingHobbies = new List<Hobby> { _existingHobby };
 
-            _fakeHobbyRepository = A.Fake<IHobbyRepository>();
+            _fakeHobbyRepository = A.Fake<IRepository<Hobby>>();
             A.CallTo(() => _fakeHobbyRepository.GetAllAsync()).Returns(Task.FromResult(_existingHobbies));
         }
 

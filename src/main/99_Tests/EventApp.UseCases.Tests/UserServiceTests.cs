@@ -11,7 +11,7 @@ namespace EventApp.UseCases.Tests
     [TestFixture]
     public class UserServiceTests
     {
-        private IUserRepository _fakeUserRepository;
+        private IRepository<User> _fakeUserRepository;
         private User _existingUser;
 
         [SetUp]
@@ -25,7 +25,7 @@ namespace EventApp.UseCases.Tests
 
              var users = (IList<User>)new List<User> { _existingUser };
 
-            _fakeUserRepository = A.Fake<IUserRepository>();
+            _fakeUserRepository = A.Fake<IRepository<User>>();
             A.CallTo(() => _fakeUserRepository.GetAllAsync()).Returns(Task.FromResult(users));
         }
 

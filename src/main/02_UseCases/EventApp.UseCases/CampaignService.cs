@@ -15,25 +15,25 @@ namespace EventApp.UseCases
         /// <summary>
         /// Репозиторий пользователей.
         /// </summary>
-        private readonly IUserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
 
         /// <summary>
         /// Репозиторий кампаний.
         /// </summary>
-        private readonly ICampaignRepository _campaignRepository;
+        private readonly IRepository<Campaign> _campaignRepository;
 
         /// <summary>
         /// Репозиторий хобби.
         /// </summary>
-        private readonly IHobbyRepository _hobbyRepository;
+        private readonly IRepository<Hobby> _hobbyRepository;
 
         /// <summary>
         /// Репозиторий сообщений.
         /// </summary>
-        private readonly IMessageRepository _messageRepository;
+        private readonly IRepository<Message> _messageRepository;
 
-        public CampaignService(IUserRepository userRepository, ICampaignRepository campaignRepository, 
-            IHobbyRepository hobbyRepository, IMessageRepository messageRepository)
+        public CampaignService(IRepository<User> userRepository, IRepository<Campaign> campaignRepository,
+            IRepository<Hobby> hobbyRepository, IRepository<Message> messageRepository)
         {
             _userRepository = userRepository;
             _campaignRepository = campaignRepository;

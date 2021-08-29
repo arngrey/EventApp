@@ -15,9 +15,9 @@ namespace EventApp.UseCases
         /// <summary>
         /// Репозиторий пользователей.
         /// </summary>
-        private readonly IUserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IRepository<User> userRepository)
         {
             _userRepository = userRepository;
         }

@@ -15,9 +15,9 @@ namespace EventApp.UseCases
         /// <summary>
         /// Репозиторий хобби.
         /// </summary>
-        private readonly IHobbyRepository _hobbyRepository;
+        private readonly IRepository<Hobby> _hobbyRepository;
 
-        public HobbyService(IHobbyRepository hobbyRepository)
+        public HobbyService(IRepository<Hobby> hobbyRepository)
         {
             _hobbyRepository = hobbyRepository;
         }

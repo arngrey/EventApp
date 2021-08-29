@@ -29,10 +29,10 @@ namespace EventApp.InterfaceAdapters.RestApi
             var session = SessionFactoryCreator.Create().OpenSession();
             services.AddSingleton(session);
 
-            services.AddSingleton<IMessageRepository, NHibernateMessageRepository>();
-            services.AddSingleton<IUserRepository, NHibernateUserRepository>();
-            services.AddSingleton<IHobbyRepository, NHibernateHobbyRepository>();
-            services.AddSingleton<ICampaignRepository, NHibernateCampaignRepository>();
+            services.AddSingleton<IRepository<Message>, NHibernateRepository<Message>>();
+            services.AddSingleton<IRepository<User>, NHibernateRepository<User>>();
+            services.AddSingleton<IRepository<Hobby>, NHibernateRepository<Hobby>>();
+            services.AddSingleton<IRepository<Campaign>, NHibernateRepository<Campaign>>();
 
             services.AddSingleton<UserService>();
             services.AddSingleton<HobbyService>();
