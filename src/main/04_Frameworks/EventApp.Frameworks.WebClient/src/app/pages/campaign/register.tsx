@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FieldForm } from "../../components/organisms/FieldForm";
 import { Table } from "../../components/organisms/Table";
 import { RegisterContainer } from "../styles";
@@ -6,14 +6,26 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { loadCampaignsAsync, loadCampaignMessagesAsync, createCampaignAsync, selectCampaigns } from '../../../app/slice';
 import { Popup } from "../../components/atoms/Popup";
 import { CampaignCard } from "./Card";
+import { useLocation } from "react-router-dom";
+import { selectAuthentication } from "../../modules/authentication/selectors";
 
 export const CampaignRegister: React.FC = () => {
     const dispatch = useAppDispatch();
-    const campaigns = useAppSelector(selectCampaigns);
     
+    const location = useLocation();
+    useEffect(() => {
+        dispatch(loadCampaignsAsync());
+    }, [location]);
+
+    const authentication = useAppSelector(selectAuthentication);
+    const campaigns = useAppSelector(selectCampaigns);
     const [campaignId, setCampaignId] = useState<string>("");
     const [isAddingCampaignPopupVisible, setAddingCampaignPopupVisibility] = useState<boolean>(false);
     const [isCardPopupVisible, setCardPopupVisibility] = useState<boolean>(false);
+
+    if (!authentication.isAuthenticated) {
+        return null;
+    }
 
     return (
         <RegisterContainer>
@@ -29,7 +41,6 @@ export const CampaignRegister: React.FC = () => {
                 rowHeight={"1rem"}
                 headersHeight={"2rem"}
                 buttonPanel={{ buttons: [ 
-                    { text: "Обновить", onClick: () => { dispatch(loadCampaignsAsync()) } },
                     { text: "Добавить кампанию", onClick: () => { setAddingCampaignPopupVisibility(true); } }
                 ] }}
                 onRowClick={(row) => {
@@ -42,11 +53,10 @@ export const CampaignRegister: React.FC = () => {
                     title={"Создание кампании"}
                     inputFields={[
                         { labelText: "Наименование", name: "name" },
-                        { labelText: "Идентификатор администратора", name: "administratorId" },
                         { labelText: "Идентификаторы хобби через \",\"", name: "hobbyIds" }
                     ]}
                     onOk={async (records) => { 
-                        await dispatch(createCampaignAsync(records["name"], records["administratorId"], records["hobbyIds"].split(",")));
+                        await dispatch(createCampaignAsync(records["name"], authentication.userId, records["hobbyIds"].split(",")));
                         await dispatch(loadCampaignsAsync());
                         setAddingCampaignPopupVisibility(false);
                     }}

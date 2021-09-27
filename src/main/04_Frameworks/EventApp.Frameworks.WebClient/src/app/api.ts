@@ -1,15 +1,21 @@
 import axios from "axios";
+import { CampaignDto } from "./models/campaign";
+import { HobbyDto } from "./models/hobby";
+import { MessageDto } from "./models/message";
 
-export async function fetchCampaigns() {
-  return await axios.get(`/api/campaigns`)
+export async function fetchCampaigns(): Promise<CampaignDto[]> {
+  const response = await axios.get(`/api/campaigns`);
+  return response.data;
 }
 
-export async function fetchHobbies() {
-  return await axios.get(`/api/hobbies`)
+export async function fetchHobbies(): Promise<HobbyDto[]> {
+  const response = await axios.get(`/api/hobbies`)
+  return response.data;
 }
 
-export async function fetchCampaignMessages(campaignId: string) {
-  return await axios.get(`/api/campaigns/${campaignId}/messages`);
+export async function fetchCampaignMessages(campaignId: string): Promise<MessageDto[]> {
+  const response = await axios.get(`/api/campaigns/${campaignId}/messages`);
+  return response.data;
 }
 
 export async function sendMessage(userId: string, campaignId: string, text: string) {
@@ -17,20 +23,6 @@ export async function sendMessage(userId: string, campaignId: string, text: stri
     userId: userId,
     campaignId: campaignId,
     text: text
-  });
-}
-
-export async function signUp(login: string, password: string) {
-  return await axios.post(`/api/users/signup`, {
-    login: login,
-    password: password
-  });
-}
-
-export async function signIn(login: string, password: string) {
-  return await axios.post(`/api/users/signin`, {
-    login: login,
-    password: password
   });
 }
 

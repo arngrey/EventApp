@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { loadHobbiesAsync, createHobbyAsync, selectHobbies } from '../../../app/slice';
 import { Table } from "../../../app/components/organisms/Table";
 import { RegisterContainer } from "../styles";
 import { FieldForm } from "../../../app/components/organisms/FieldForm";
 import { Popup } from "../../../app/components/atoms/Popup";
+import { useLocation } from "react-router-dom";
 
 export const HobbyRegister: React.FC = () => {
     const dispatch = useAppDispatch();
+
+    const location = useLocation();
+    useEffect(() => {
+        dispatch(loadHobbiesAsync())
+    }, [location]);
+
     const hobbies = useAppSelector(selectHobbies);
     const [isPopupVisible, setPopupVisibility] = useState<boolean>(false);
 
@@ -20,7 +27,6 @@ export const HobbyRegister: React.FC = () => {
                 rowHeight={"1rem"}
                 headersHeight={"2rem"}
                 buttonPanel={{ buttons: [ 
-                    { text: "Обновить", onClick: () => { dispatch(loadHobbiesAsync()) } },
                     { text: "Добавить", onClick: () => { setPopupVisibility(true); } }
                 ] }} />
             <Popup isVisible={isPopupVisible}>

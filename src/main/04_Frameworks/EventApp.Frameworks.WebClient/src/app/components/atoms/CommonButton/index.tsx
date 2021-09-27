@@ -4,7 +4,8 @@ import { DefaultCommonButton } from "./styles";
 
 export type CommonButtonProps = {
     text: string;
-    onClick: (history: any) => void
+    onClick: (history: any) => void;
+    isVisible?: boolean;
 }
 
 export const CommonButton: React.FC<CommonButtonProps> = (props: CommonButtonProps) => {

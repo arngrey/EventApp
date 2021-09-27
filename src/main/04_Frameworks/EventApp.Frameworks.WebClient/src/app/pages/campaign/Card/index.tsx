@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { CardContainer } from "../../styles";
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { loadCampaignsAsync, loadCampaignMessagesAsync, sendMessageAsync, addParticipantAsync, selectCampaignMessages } from '../../../slice';
+import { loadCampaignsAsync, loadCampaignMessagesAsync, sendMessageAsync, addParticipantAsync, selectCampaignMessages, selectCampaign } from '../../../slice';
+import { selectAuthentication } from '../../../modules/authentication/selectors';
 import { Table } from "../../../components/organisms/Table";
 import { Popup } from "../../../components/atoms/Popup";
 import { CommonButtonPanel } from "../../../components/molecules/CommonButtonPanel";
 import { FieldForm } from "../../../components/organisms/FieldForm";
 import { CommonButtonPanelContainer, TableContainer } from "./styles";
+import { UserFlatDto } from "../../../models/user";
 
 export type CampaignCardProps = {
     campaignId: string;
@@ -15,9 +17,19 @@ export type CampaignCardProps = {
 
 export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
     const dispatch = useAppDispatch();
+    const authentication = useAppSelector(selectAuthentication);
+    const campaign = useAppSelector(selectCampaign(props.campaignId));
     const campaignMessages = useAppSelector(selectCampaignMessages);
     const [isAddingMessagePopupVisible, setAddingMessagePopupVisibility] = useState<boolean>(false);
     const [isAddingParticipantPopupVisible, setAddingParticipantPopupVisibility] = useState<boolean>(false);
+
+    if (!authentication.isAuthenticated) {
+        return null;
+    }
+
+    if (campaign === undefined) {
+        return null;
+    }
 
     return (
         <CardContainer>
@@ -37,18 +49,24 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
                 <CommonButtonPanel
                     buttons={[
                         { text: "Закрыть", onClick: () => { props.onClose(); } },
-                        { text: "Добавить участника", onClick: () => { setAddingParticipantPopupVisibility(true); } }
+                        { text: "Присоединиться", onClick: async () => { 
+                            await dispatch(addParticipantAsync(authentication.userId, campaign.id));
+                            await dispatch(loadCampaignsAsync());
+                        }, isVisible: !campaign.participants.some((participant: UserFlatDto) => participant.id === authentication.userId) },
+                        { text: "Добавить участника", onClick: () => { setAddingParticipantPopupVisibility(true); }, isVisible: campaign.administrator.id === authentication.userId }
                     ]} />   
             </CommonButtonPanelContainer>                
             <Popup isVisible={isAddingMessagePopupVisible}>
                 <FieldForm 
                     title={"Отправить сообщение"}
                     inputFields={[
-                    { labelText: "Идентификатор пользователя", name: "userId" },
-                    { labelText: "Текст", name: "text" }
+                        { labelText: "Текст", name: "text" }
                     ]}
                     onOk={async (records) => {
-                        await dispatch(sendMessageAsync(records["userId"], props.campaignId, records["text"]));
+                        if (!authentication.isAuthenticated) {
+                            return;
+                        }
+                        await dispatch(sendMessageAsync(authentication.userId, props.campaignId, records["text"]));
                         await dispatch(loadCampaignMessagesAsync(props.campaignId));
                         setAddingMessagePopupVisibility(false);
                     }}

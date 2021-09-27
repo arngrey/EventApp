@@ -11,7 +11,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = (props) => {
         <NavigationBarContainer>
             {
                 props.navigationItems
-                    .filter(navigationItem => navigationItem.isVisible)
+                    .filter(navigationItem => navigationItem.isVisible === undefined || navigationItem.isVisible)
                     .map((navigationItem, i) => (
                         <NavigationItemContainer key={i}>
                             <NavigationItem 

@@ -10,12 +10,14 @@ export const CommonButtonPanel: React.FC<CommonButtonPanelProps> = (props: Commo
     return (
         <DefaultCommonButtonPanel>
             {
-                props.buttons.map((button, i) => (
-                    <CommonButton 
-                        key={i}
-                        text={button.text}
-                        onClick={button.onClick} />
-                ))
+                props.buttons
+                    .filter(button => button.isVisible === undefined || button.isVisible)
+                    .map((button, i) => (
+                        <CommonButton 
+                            key={i}
+                            text={button.text}
+                            onClick={button.onClick} />
+                    ))
             }
         </DefaultCommonButtonPanel>
     );

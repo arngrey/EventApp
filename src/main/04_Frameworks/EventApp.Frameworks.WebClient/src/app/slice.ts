@@ -1,23 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { addParticipant, createCampaign, createHobby, signUp, signIn, fetchCampaignMessages, fetchCampaigns, fetchHobbies, sendMessage } from './api';
+import { addParticipant, createCampaign, createHobby, fetchCampaignMessages, fetchCampaigns, fetchHobbies, sendMessage } from './api';
 import { AppThunk, RootState } from './store';
-import CryptoJs from "crypto-js";
+import { CampaignDto } from './models/campaign';
+import { HobbyDto } from './models/hobby';
+import { MessageDto } from './models/message';
+
 
 export interface AppState {
-  authentication: {
-    isAuthenticated: boolean;
-    userId?: string;
-  }
-  campaigns: any;
-  hobbies: any;
-  campaignMessages: any;
+  campaigns: CampaignDto[];
+  hobbies: HobbyDto[];
+  campaignMessages: MessageDto[];
 }
 
 const initialState: AppState = {
-  authentication: {
-    isAuthenticated: false
-  },
   campaigns: [],
   hobbies: [],
   campaignMessages: [],
@@ -27,30 +22,24 @@ export const loadCampaignsAsync = (): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await fetchCampaigns();
-  console.log(response.data);
-
-  dispatch(setCampaigns(response.data))
+  const campaigns = await fetchCampaigns();
+  dispatch(setCampaigns(campaigns))
 }
 
 export const loadHobbiesAsync = (): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await fetchHobbies();
-  console.log(response.data);
-
-  dispatch(setHobbies(response.data))
+  const hobbies = await fetchHobbies();
+  dispatch(setHobbies(hobbies))
 }
 
 export const loadCampaignMessagesAsync = (campaignId: string): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await fetchCampaignMessages(campaignId);
-  console.log(response.data);
-
-  dispatch(setCampaignMessages(response.data))
+  const campaignMessages = await fetchCampaignMessages(campaignId);
+  dispatch(setCampaignMessages(campaignMessages))
 }
 
 export const sendMessageAsync = (userId: string, campaignId: string, text: string): AppThunk => async (
@@ -59,50 +48,6 @@ export const sendMessageAsync = (userId: string, campaignId: string, text: strin
 ) => {
   const response = await sendMessage(userId, campaignId, text);
   console.log(response.data);
-}
-
-export const signUpAsync = (login: string, password: string): AppThunk => async (
-  dispatch,
-  getState
-) => {
-  const response = await signUp(login, password);
-  console.log(response.data);
-}
-
-export const signInAsync = (login: string, password: string): AppThunk => async (
-  dispatch,
-  getState
-) => {
-  try {
-    const response = await signIn(login, password);
-
-    dispatch(setAuthentication({ 
-      isAuthenticated: true, 
-      userId: response.data.id 
-    }));
-
-    const authWordArray = CryptoJs.enc.Utf8.parse(`${login}:${password}`);
-    const authBase64 = CryptoJs.enc.Base64.stringify(authWordArray);
-    axios.defaults.headers.common["Authorization"] = "Basic " + authBase64;
-  } catch (e) {
-    throw e;
-  }
-}
-
-export const logOutAsync = (): AppThunk => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch(setAuthentication({ 
-      isAuthenticated: false, 
-      userId: null
-    }));
-
-    delete axios.defaults.headers.common["Authorization"];
-  } catch (e) {
-    throw e;
-  }
 }
 
 export const createHobbyAsync = (name: string): AppThunk => async (
@@ -118,7 +63,6 @@ export const addParticipantAsync = (userId: string, campaignId: string): AppThun
   getState
 ) => {
   const response = await addParticipant(userId, campaignId);
-  console.log(response.data);
 }
 
 export const createCampaignAsync = (name: string, administratorId: string, hobbyIds: Array<string>): AppThunk => async (
@@ -133,27 +77,23 @@ export const campaignSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    setCampaigns: (state, action: PayloadAction<any>) => {
+    setCampaigns: (state, action: PayloadAction<CampaignDto[]>) => {
       state.campaigns = action.payload;
     },
-    setHobbies: (state, action: PayloadAction<any>) => {
+    setHobbies: (state, action: PayloadAction<HobbyDto[]>) => {
       state.hobbies = action.payload;
     },
-    setCampaignMessages: (state, action: PayloadAction<any>) => {
+    setCampaignMessages: (state, action: PayloadAction<MessageDto[]>) => {
       state.campaignMessages = action.payload;
-    },
-    setAuthentication: (state, action: PayloadAction<any>) => {
-      state.authentication.isAuthenticated = action.payload.isAuthenticated;
-      state.authentication.userId = action.payload.userId;
     }
   },
 });
 
-export const { setCampaigns, setHobbies, setCampaignMessages, setAuthentication } = campaignSlice.actions;
+export const { setCampaigns, setHobbies, setCampaignMessages } = campaignSlice.actions;
 
-export const selectCampaigns = (state: RootState) => state.main.campaigns;
-export const selectCampaignMessages = (state: RootState) => state.main.campaignMessages;
-export const selectHobbies = (state: RootState) => state.main.hobbies;
-export const selectAuthentication = (state: RootState) => state.main.authentication;
+export const selectCampaigns: (state: RootState) => CampaignDto[] = state => state.main.campaigns;
+export const selectCampaign: (campaignId: string) => (state: RootState) => CampaignDto | undefined = campaignId => state => state.main.campaigns.find((campaign: any) => campaign["id"] === campaignId);
+export const selectCampaignMessages: (state: RootState) => MessageDto[] = state => state.main.campaignMessages;
+export const selectHobbies: (state: RootState) => HobbyDto[] = state => state.main.hobbies;
 
 export default campaignSlice.reducer;

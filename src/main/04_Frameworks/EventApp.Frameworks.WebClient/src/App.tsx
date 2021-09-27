@@ -10,14 +10,15 @@ import { HobbyRegister } from "./app/pages/hobby/register";
 import { CampaignRegister } from "./app/pages/campaign/register";
 import { FieldForm } from './app/components/organisms/FieldForm';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { signUpAsync, signInAsync, selectAuthentication, logOutAsync } from './app/slice';
+import { signUpAsync, signInAsync, logOutAsync } from './app/modules/authentication/slice';
 import { PrivateRoute } from './app/components/organisms/PrivateRoute';
 import { CommonButtonPanel } from './app/components/molecules/CommonButtonPanel';
+import { selectAuthentication } from './app/modules/authentication/selectors';
 
 function App() {
   const dispatch = useAppDispatch();
   const authentication = useAppSelector(selectAuthentication);
-  
+
   return (
     <AppContainer>
       <BrowserRouter>
@@ -56,8 +57,9 @@ function App() {
                 { labelText: "Логин", name: "login" },
                 { labelText: "Пароль", name: "password" }
               ]}
-              onOk={async (record) => { 
+              onOk={async (record, history) => { 
                 await dispatch(signUpAsync(record["login"], record["password"]));
+                history.push("/");
               }}
               onCancel={() => {}} />
           </Route>          
