@@ -31,7 +31,9 @@ namespace EventApp
         private static void BuildSchema(NHibernate.Cfg.Configuration config)
         {
             new SchemaExport(config)
-              .Create(true, true);
+              .Execute(true, true, false);
+            //new SchemaExport(config)
+            //    .Create(true, true);
         }
     }
 }

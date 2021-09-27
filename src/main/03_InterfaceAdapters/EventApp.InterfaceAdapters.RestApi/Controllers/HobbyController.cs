@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EventApp.InterfaceAdapters.RestApi.Dtos;
 using EventApp.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventApp.InterfaceAdapters.RestApi.Controllers
 {
+    [Authorize]
     [Route("api/hobbies")]
     [ApiController]
     public class HobbyController : ControllerBase

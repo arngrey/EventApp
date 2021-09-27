@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventApp.InterfaceAdapters.RestApi.Dtos;
 using EventApp.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace EventApp.InterfaceAdapters.RestApi.Controllers
 {
+    [Authorize]
     [Route("api/campaigns")]
     [ApiController]
     public class CampaignController : ControllerBase

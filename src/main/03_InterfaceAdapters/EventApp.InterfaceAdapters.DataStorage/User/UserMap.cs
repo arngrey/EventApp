@@ -11,9 +11,9 @@ namespace EventApp.InterfaceAdapters.DataStorage
         public UserMap()
         {
             Id(x => x.Id);
-            Map(x => x.Name);
-            HasManyToMany(x => x.JoinedCampaigns)
-                .Table("CampaignParticipant");
+            Map(x => x.FirstName);
+            Map(x => x.Login);
+            Map(x => x.Password);
         }
     }
 }

@@ -10,14 +10,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = (props) => {
     return (
         <NavigationBarContainer>
             {
-                props.navigationItems.map((navigationItem, i) => (
-                    <NavigationItemContainer key={i}>
-                        <NavigationItem 
-                            key={i}
-                            path={navigationItem.path}
-                            title={navigationItem.title}/>
-                    </NavigationItemContainer>
-                ))
+                props.navigationItems
+                    .filter(navigationItem => navigationItem.isVisible)
+                    .map((navigationItem, i) => (
+                        <NavigationItemContainer key={i}>
+                            <NavigationItem 
+                                key={i}
+                                {...navigationItem}/>
+                        </NavigationItemContainer>
+                    ))
             }
         </NavigationBarContainer>
     )

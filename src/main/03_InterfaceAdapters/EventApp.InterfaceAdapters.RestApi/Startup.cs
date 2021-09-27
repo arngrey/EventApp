@@ -1,6 +1,9 @@
 using EventApp.Entities;
 using EventApp.InterfaceAdapters.DataStorage;
+using EventApp.InterfaceAdapters.RestApi.Utils;
 using EventApp.UseCases;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +41,9 @@ namespace EventApp.InterfaceAdapters.RestApi
             services.AddSingleton<HobbyService>();
             services.AddSingleton<CampaignService>();
 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
             services.AddControllers();
         }
 
@@ -52,6 +58,7 @@ namespace EventApp.InterfaceAdapters.RestApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

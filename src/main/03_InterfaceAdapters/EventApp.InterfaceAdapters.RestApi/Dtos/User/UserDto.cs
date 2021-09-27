@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EventApp.Entities;
 using System;
-using System.Collections.Generic;
 
 namespace EventApp.InterfaceAdapters.RestApi.Dtos
 {
@@ -14,13 +13,13 @@ namespace EventApp.InterfaceAdapters.RestApi.Dtos
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Имя пользователя.
+        /// Логин пользователя.
         /// </summary>
-        public string Name { get; set; }
+        public string Login { get; set; }
 
         /// <summary>
-        /// Задает или получает перечисление кампаний, участником которых является пользователь.
+        /// Имя пользователя.
         /// </summary>
-        public IList<FlatCampaignDto> JoinedCampaignIds { get; set; }
+        public string FirstName { get; set; }
     }
 }

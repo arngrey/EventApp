@@ -20,7 +20,8 @@ namespace EventApp.UseCases.Tests
             _existingUser = new User
             {
                 Id = Guid.NewGuid(),
-                Name = "ExistingUser"
+                Login = "ExistingUser",
+                Password = "ExistingPassword"
             };
 
              var users = (IList<User>)new List<User> { _existingUser };
@@ -30,11 +31,11 @@ namespace EventApp.UseCases.Tests
         }
 
         [Test]
-        [Description("Должен уметь создавать новго пользователя.")]
+        [Description("Должен уметь регистрировать новго пользователя.")]
         public async Task CanCreateUserTest()
         {
             var sut = new UserService(_fakeUserRepository);
-            var result = await sut.CreateUserAsync("NewUser");
+            var result = await sut.SignUpAsync("NewUser", "NewPassword");
 
             result.IsSuccess.Should().Be(true);
             result.Value.Should().NotBeEmpty();
@@ -42,11 +43,22 @@ namespace EventApp.UseCases.Tests
         }
 
         [Test]
-        [Description("Не должен создавать пользователей с одинаковыми именами.")]
-        public async Task CantCreateUserWithExistingNameTest()
+        [Description("Не должен регистрировать пользователя без пароля.")]
+        public async Task CantCreateUserWithoutPasswordTest()
         {
             var sut = new UserService(_fakeUserRepository);
-            var result = await sut.CreateUserAsync("ExistingUser");
+            var result = await sut.SignUpAsync("NewUser", "");
+
+            result.IsFailure.Should().Be(true);
+            A.CallTo(() => _fakeUserRepository.SaveAsync(A<User>.Ignored)).MustNotHaveHappened();
+        }
+
+        [Test]
+        [Description("Не должен регистрировать пользователей с одинаковыми именами.")]
+        public async Task CantSignUpUserWithExistingNameTest()
+        {
+            var sut = new UserService(_fakeUserRepository);
+            var result = await sut.SignUpAsync("ExistingUser", "ExistingPassword");
 
             result.IsFailure.Should().Be(true);
             A.CallTo(() => _fakeUserRepository.SaveAsync(A<User>.Ignored)).MustNotHaveHappened();

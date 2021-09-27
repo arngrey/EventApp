@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security;
 
 namespace EventApp.Entities
 {
@@ -8,13 +9,18 @@ namespace EventApp.Entities
     public class User: Entity
     {
         /// <summary>
-        /// Задает или получает имя пользователя.
+        /// Задает или получает логин пользователя.
         /// </summary>
-        public virtual string Name { get; set; }
+        public virtual string Login { get; set; }
 
         /// <summary>
-        /// Задает или получает перечисление кампаний, участником которых является пользователь.
+        /// Задает или получает пароль пользователя.
         /// </summary>
-        public virtual IList<Campaign> JoinedCampaigns { get; set; }
+        public virtual string Password { get; set; }
+
+        /// <summary>
+        /// Задает или получает имя пользователя.
+        /// </summary>
+        public virtual string FirstName { get; set; }
     }
 }

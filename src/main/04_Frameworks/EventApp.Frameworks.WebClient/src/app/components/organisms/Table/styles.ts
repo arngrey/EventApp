@@ -21,6 +21,7 @@ export const RowsContainer = styled.div`
     position: relative;
     border: 1px solid black;
     overflow-y: auto;
+    min-height: 10rem;
 `
 
 export type HeadersContainerProps = {

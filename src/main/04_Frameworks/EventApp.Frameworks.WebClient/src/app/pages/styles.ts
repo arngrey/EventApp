@@ -7,3 +7,11 @@ export const RegisterContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
+
+export const CardContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+`

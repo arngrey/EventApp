@@ -20,9 +20,17 @@ export async function sendMessage(userId: string, campaignId: string, text: stri
   });
 }
 
-export async function createUser(name: string) {
-  return await axios.post(`/api/users/new`, {
-    name: name
+export async function signUp(login: string, password: string) {
+  return await axios.post(`/api/users/signup`, {
+    login: login,
+    password: password
+  });
+}
+
+export async function signIn(login: string, password: string) {
+  return await axios.post(`/api/users/signin`, {
+    login: login,
+    password: password
   });
 }
 

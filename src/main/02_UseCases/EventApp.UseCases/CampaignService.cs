@@ -136,7 +136,7 @@ namespace EventApp.UseCases
                 return Result.Failure("Не найденa кампания по идентификатору.");
             }
 
-            if (!user.JoinedCampaigns.Contains(campaign))
+            if (!campaign.Participants.Contains(user))
             {
                 return Result.Failure("Пользователь не состоит в кампании.");
             }

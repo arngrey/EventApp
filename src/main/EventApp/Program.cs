@@ -20,7 +20,7 @@ namespace EventApp
 
                 var userRepository = new NHibernateRepository<User>(session);
                 var userService = new UserService(userRepository);
-                var userId = userService.CreateUserAsync("TestUser").Result.Value;
+                var userId = userService.SignUpAsync("TestUser", "TestPassword").Result.Value;
 
                 var messageRepository = new NHibernateRepository<Message>(session);
 

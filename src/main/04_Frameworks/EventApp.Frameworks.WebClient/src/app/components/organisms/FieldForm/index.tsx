@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { CommonTitle } from "../../atoms/CommonTitle";
 import { CommonButtonPanel } from "../../molecules/CommonButtonPanel";
 import { InputField } from "../../molecules/InputField";
@@ -14,11 +15,12 @@ type InputFieldProps = {
 export type FieldFormProps = {
     title: string;
     inputFields: Array<InputFieldProps>
-    onOk: (records: any) => void;
+    onOk: (records: any, history: any) => void;
     onCancel: () => void;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
+    const history = useHistory();
     const [inputFieldRecords, setInputFieldRecords] = useState<InputFieldRecords>({});
     
     return (
@@ -43,7 +45,7 @@ export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
             </FieldFormFieldsContainer>
             <CommonButtonPanel 
                 buttons={[
-                    { text: "Ок", onClick: () => { props.onOk(inputFieldRecords) } }, 
+                    { text: "Ок", onClick: () => { props.onOk(inputFieldRecords, history) } }, 
                     { text: "Отмена", onClick: props.onCancel }
                 ]} />
         </FieldFormContainer>
