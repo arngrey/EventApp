@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventApp.Entities;
+using EventApp.Models;
 using System;
 
 namespace EventApp.InterfaceAdapters.RestApi.Dtos

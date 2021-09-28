@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EventApp.Entities
+namespace EventApp.Models
 {
     /// <summary>
     /// Кампания.

@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using EventApp.Entities;
+using EventApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

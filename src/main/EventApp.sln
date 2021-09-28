@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp", "EventApp\EventApp.csproj", "{20D3C8B1-4A19-45FC-99B0-E9B673612546}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Entities", "01_Entities", "{D7B2B88D-9966-4D01-9931-3DF5AF29CDA8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Models", "01_Models", "{D7B2B88D-9966-4D01-9931-3DF5AF29CDA8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_UseCases", "02_UseCases", "{918916D6-17E0-4440-89D1-139763C7CCD4}"
 EndProject
@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99_Tests", "99_Tests", "{7B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Frameworks", "04_Frameworks", "{2742CB68-9579-45EB-B7B8-57ED2848ACEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.Entities", "01_Entities\EventApp.Entities\EventApp.Entities.csproj", "{8C281883-82F2-4C31-8370-3E55BB1BBDAE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.UseCases", "02_UseCases\EventApp.UseCases\EventApp.UseCases.csproj", "{A2468E24-4BD6-4F53-8B01-B55CF4185061}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.InterfaceAdapters.DataStorage", "03_InterfaceAdapters\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj", "{720DFD1C-164E-4D5A-92A9-04C0B9DEC52E}"
@@ -24,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.InterfaceAdapters.RestApi", "03_InterfaceAdapters\EventApp.InterfaceAdapters.RestApi\EventApp.InterfaceAdapters.RestApi.csproj", "{215B745D-ED8E-4202-A9B2-B70C28A4B8E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.UseCases.Tests", "99_Tests\EventApp.UseCases.Tests\EventApp.UseCases.Tests.csproj", "{DBBD14A9-E238-43FF-A6A9-EB930B07D73E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventApp.Models", "01_Models\EventApp.Models\EventApp.Models.csproj", "{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,6 @@ Global
 		{20D3C8B1-4A19-45FC-99B0-E9B673612546}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D3C8B1-4A19-45FC-99B0-E9B673612546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D3C8B1-4A19-45FC-99B0-E9B673612546}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C281883-82F2-4C31-8370-3E55BB1BBDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C281883-82F2-4C31-8370-3E55BB1BBDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C281883-82F2-4C31-8370-3E55BB1BBDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C281883-82F2-4C31-8370-3E55BB1BBDAE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2468E24-4BD6-4F53-8B01-B55CF4185061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2468E24-4BD6-4F53-8B01-B55CF4185061}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2468E24-4BD6-4F53-8B01-B55CF4185061}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,16 +51,20 @@ Global
 		{DBBD14A9-E238-43FF-A6A9-EB930B07D73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBBD14A9-E238-43FF-A6A9-EB930B07D73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBBD14A9-E238-43FF-A6A9-EB930B07D73E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8C281883-82F2-4C31-8370-3E55BB1BBDAE} = {D7B2B88D-9966-4D01-9931-3DF5AF29CDA8}
 		{A2468E24-4BD6-4F53-8B01-B55CF4185061} = {918916D6-17E0-4440-89D1-139763C7CCD4}
 		{720DFD1C-164E-4D5A-92A9-04C0B9DEC52E} = {E86DA1D1-95A3-46A3-84B5-65BA627847A8}
 		{215B745D-ED8E-4202-A9B2-B70C28A4B8E9} = {E86DA1D1-95A3-46A3-84B5-65BA627847A8}
 		{DBBD14A9-E238-43FF-A6A9-EB930B07D73E} = {7B218F51-73A2-45BB-A5C3-2D01A051C805}
+		{2F3B40A2-A7E5-4E7C-843E-B9F0472DDB6A} = {D7B2B88D-9966-4D01-9931-3DF5AF29CDA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3BC1191-6819-4E2D-AB98-E37EFA535520}

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\01_Entities\EventApp.Entities\EventApp.Entities.csproj" />
+    <ProjectReference Include="..\..\01_Models\EventApp.Models\EventApp.Models.csproj" />
     <ProjectReference Include="..\..\02_UseCases\EventApp.UseCases\EventApp.UseCases.csproj" />
     <ProjectReference Include="..\EventApp.InterfaceAdapters.DataStorage\EventApp.InterfaceAdapters.DataStorage.csproj" />
   </ItemGroup>

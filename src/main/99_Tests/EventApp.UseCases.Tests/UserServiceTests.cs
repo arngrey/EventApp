@@ -1,4 +1,4 @@
-﻿using EventApp.Entities;
+﻿using EventApp.Models;
 using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;

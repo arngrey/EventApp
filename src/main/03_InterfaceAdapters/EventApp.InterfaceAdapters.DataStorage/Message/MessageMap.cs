@@ -1,4 +1,4 @@
-﻿using EventApp.Entities;
+﻿using EventApp.Models;
 using FluentNHibernate.Mapping;
 
 namespace EventApp.InterfaceAdapters.DataStorage

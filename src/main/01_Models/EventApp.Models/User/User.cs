@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security;
-
-namespace EventApp.Entities
+﻿namespace EventApp.Models
 {
     /// <summary>
     /// Пользователь.

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventApp.Entities;
+using EventApp.Models;
 using EventApp.InterfaceAdapters.RestApi.Dtos;
 using System.Linq;
 

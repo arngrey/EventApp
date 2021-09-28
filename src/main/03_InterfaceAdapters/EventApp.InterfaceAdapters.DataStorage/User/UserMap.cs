@@ -1,5 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
-using EventApp.Entities;
+using EventApp.Models;
 
 namespace EventApp.InterfaceAdapters.DataStorage
 {

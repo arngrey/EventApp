@@ -1,4 +1,4 @@
-﻿using EventApp.Entities;
+﻿using EventApp.Models;
 using NHibernate;
 using System;
 using System.Collections.Generic;

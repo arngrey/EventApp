@@ -1,4 +1,4 @@
-﻿using EventApp.Entities;
+﻿using EventApp.Models;
 using EventApp.InterfaceAdapters.DataStorage;
 using EventApp.UseCases;
 using System;

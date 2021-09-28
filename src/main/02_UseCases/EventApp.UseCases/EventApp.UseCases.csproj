@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\01_Entities\EventApp.Entities\EventApp.Entities.csproj" />
+    <ProjectReference Include="..\..\01_Models\EventApp.Models\EventApp.Models.csproj" />
   </ItemGroup>
 
 </Project>

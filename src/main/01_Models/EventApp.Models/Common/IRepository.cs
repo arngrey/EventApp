@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EventApp.Entities
+namespace EventApp.Models
 {
     /// <summary>
     /// Репозиторий.

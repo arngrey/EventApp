@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventApp.Entities
+namespace EventApp.Models
 {
     /// <summary>
     /// Сообщение.
