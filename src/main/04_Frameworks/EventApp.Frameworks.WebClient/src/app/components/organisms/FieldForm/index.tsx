@@ -2,26 +2,39 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CommonTitle } from "../../atoms/CommonTitle";
 import { CommonButtonPanel } from "../../molecules/CommonButtonPanel";
-import { InputField } from "../../molecules/InputField";
+import { InputField, InputFieldProps } from "../../molecules/InputField";
+import { SelectField, SelectFieldProps } from "../../molecules/SelectField";
 import { FieldFormContainer, FieldFormFieldsContainer, FieldFormTitleContainer } from "./styles";
 
-type InputFieldRecords = Record<string, string>;
+type FieldRecords = Record<string, string | string[]>;
 
-type InputFieldProps = {
-    labelText: string;
+type FieldProps = {
     name: string;
 }
 
+export type SelectFieldFormProps = FieldProps
+& {
+    type: "select"
+    props: Omit<SelectFieldProps, "onChange">
+}
+
+export type InputFieldFormProps = FieldProps
+& {
+    type: "input"
+    props: Omit<InputFieldProps, "onChange">
+}
+
+
 export type FieldFormProps = {
     title: string;
-    inputFields: Array<InputFieldProps>
+    fields: Array<SelectFieldFormProps | InputFieldFormProps>
     onOk: (records: any, history: any) => void;
     onCancel: () => void;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
     const history = useHistory();
-    const [inputFieldRecords, setInputFieldRecords] = useState<InputFieldRecords>({});
+    const [fieldRecords, setFieldRecords] = useState<FieldRecords>({});
     
     return (
         <FieldFormContainer>
@@ -31,21 +44,46 @@ export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
             </FieldFormTitleContainer>
             <FieldFormFieldsContainer>
             {
-                props.inputFields.map((inputField, i) => (
-                    <InputField 
-                        key={i}
-                        labelText={inputField.labelText}
-                        onChange={(e) => {
-                            const newValue = e.target.value;
-                            inputFieldRecords[inputField.name] = newValue
-                            setInputFieldRecords(inputFieldRecords);
-                        }} />
-                ))
+                props.fields.map((field, i) => {
+                    switch (field.type) {
+                        case "input":
+                            return (
+                                <InputField 
+                                    {...field.props} 
+                                    key={i}
+                                    onChange={e => {
+                                        const newValue = e.target.value;
+                                        fieldRecords[field.name] = newValue;
+                                        setFieldRecords(fieldRecords);
+                                    }} />
+                            );
+                        case "select":
+                            return (
+                                <SelectField 
+                                    {...field.props}
+                                    key={i}
+                                    onChange={newOption => {
+                                        if (newOption === null) {
+                                            fieldRecords[field.name] = "";
+                                        } else if (Array.isArray(newOption)) {
+                                            fieldRecords[field.name] = (newOption as any[]).map(option => option.value);
+                                        } else {
+                                            fieldRecords[field.name] = (newOption as any).value;
+                                        }
+
+                                        setFieldRecords(fieldRecords);
+                                    }} />
+                            );
+                        default:
+                            return null;
+                    }
+                    
+                })
             }
             </FieldFormFieldsContainer>
             <CommonButtonPanel 
                 buttons={[
-                    { text: "Ок", onClick: () => { props.onOk(inputFieldRecords, history) } }, 
+                    { text: "Ок", onClick: () => { props.onOk(fieldRecords, history) } }, 
                     { text: "Отмена", onClick: props.onCancel }
                 ]} />
         </FieldFormContainer>

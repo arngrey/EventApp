@@ -8,11 +8,9 @@ export type InputFieldProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const InputField: React.FC<InputFieldProps> = (props: InputFieldProps) => {
-    return (
-        <InputFieldContainer>
-            <FieldLabel text={props.labelText} />
-            <FieldInput onChange={ props.onChange } />
-        </InputFieldContainer>
-    )
-}
+export const InputField: React.FC<InputFieldProps> = props => (
+    <InputFieldContainer>
+        <FieldLabel text={props.labelText} />
+        <FieldInput onChange={ props.onChange } />
+    </InputFieldContainer>
+)

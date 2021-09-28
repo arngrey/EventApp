@@ -31,10 +31,5 @@ namespace EventApp.InterfaceAdapters.RestApi.Dtos
         /// Задает или получает список участников кампании.
         /// </summary>
         public IList<FlatUserDto> Participants { get; set; }
-
-        /// <summary>
-        /// Задает или получает список сообщений кампании.
-        /// </summary>
-        public IList<FlatMessageDto> Messages { get; set; }
     }
 }

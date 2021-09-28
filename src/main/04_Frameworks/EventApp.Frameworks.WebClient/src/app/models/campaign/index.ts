@@ -1,5 +1,5 @@
 import { HobbyFlatDto } from "../hobby";
-import { MessageFlatDto } from "../message";
+import { MessageDto } from "../message";
 import { UserFlatDto } from "../user";
 
 export interface CampaignDto {
@@ -8,7 +8,7 @@ export interface CampaignDto {
     administrator: UserFlatDto,
     hobbies: Array<HobbyFlatDto>,
     participants: Array<UserFlatDto>,
-    messages: Array<MessageFlatDto>
+    messages?: Array<MessageDto>
 }
 
 export interface CampaignFlatDto {

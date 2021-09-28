@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { CardContainer } from "../../styles";
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { loadCampaignsAsync, loadCampaignMessagesAsync, sendMessageAsync, addParticipantAsync, selectCampaignMessages, selectCampaign } from '../../../slice';
+import { loadCampaignsAsync, loadCampaignMessagesAsync, sendMessageAsync, addParticipantAsync } from '../../../slice';
 import { selectAuthentication } from '../../../modules/authentication/selectors';
 import { Table } from "../../../components/organisms/Table";
 import { Popup } from "../../../components/atoms/Popup";
 import { CommonButtonPanel } from "../../../components/molecules/CommonButtonPanel";
+import { CommonTitle } from "../../../components/atoms/CommonTitle";
 import { FieldForm } from "../../../components/organisms/FieldForm";
-import { CommonButtonPanelContainer, TableContainer } from "./styles";
+import { CommonButtonPanelContainer, TableContainer, CardTitleContainer } from "./styles";
 import { UserFlatDto } from "../../../models/user";
+import { selectCampaign } from "../../../selectors"
 
 export type CampaignCardProps = {
     campaignId: string;
@@ -19,9 +21,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
     const dispatch = useAppDispatch();
     const authentication = useAppSelector(selectAuthentication);
     const campaign = useAppSelector(selectCampaign(props.campaignId));
-    const campaignMessages = useAppSelector(selectCampaignMessages);
     const [isAddingMessagePopupVisible, setAddingMessagePopupVisibility] = useState<boolean>(false);
-    const [isAddingParticipantPopupVisible, setAddingParticipantPopupVisibility] = useState<boolean>(false);
 
     if (!authentication.isAuthenticated) {
         return null;
@@ -31,8 +31,14 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
         return null;
     }
 
+    const campaignMessages = campaign.messages === undefined ? [] : campaign.messages;
+
     return (
         <CardContainer>
+            <CardTitleContainer>
+                <CommonTitle 
+                    text={`Кампания ${campaign.name}`} />
+            </CardTitleContainer>
             <TableContainer>
                 <Table
                     title={"Список сообщений кампании"}
@@ -52,15 +58,15 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
                         { text: "Присоединиться", onClick: async () => { 
                             await dispatch(addParticipantAsync(authentication.userId, campaign.id));
                             await dispatch(loadCampaignsAsync());
-                        }, isVisible: !campaign.participants.some((participant: UserFlatDto) => participant.id === authentication.userId) },
-                        { text: "Добавить участника", onClick: () => { setAddingParticipantPopupVisibility(true); }, isVisible: campaign.administrator.id === authentication.userId }
+                            await dispatch(loadCampaignMessagesAsync(props.campaignId));
+                        }, isVisible: !campaign.participants.some((participant: UserFlatDto) => participant.id === authentication.userId) }
                     ]} />   
             </CommonButtonPanelContainer>                
             <Popup isVisible={isAddingMessagePopupVisible}>
                 <FieldForm 
                     title={"Отправить сообщение"}
-                    inputFields={[
-                        { labelText: "Текст", name: "text" }
+                    fields={[
+                        { name: "text", type: "input", props: { labelText: "Текст" } },
                     ]}
                     onOk={async (records) => {
                         if (!authentication.isAuthenticated) {
@@ -71,19 +77,6 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
                         setAddingMessagePopupVisibility(false);
                     }}
                     onCancel={() => { setAddingMessagePopupVisibility(false); }} />
-            </Popup>
-            <Popup isVisible={isAddingParticipantPopupVisible}>
-                <FieldForm 
-                    title={"Добавить участника в кампанию"}
-                    inputFields={[
-                        { labelText: "Идентификатор пользователя", name: "userId" }
-                    ]}
-                    onOk={async (records) => { 
-                        await dispatch(addParticipantAsync(records["userId"], props.campaignId));
-                        await dispatch(loadCampaignsAsync());
-                        setAddingParticipantPopupVisibility(false);
-                    }}
-                    onCancel={() => { setAddingParticipantPopupVisibility(false); }} />   
             </Popup>
         </CardContainer>
     )

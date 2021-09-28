@@ -40,9 +40,9 @@ function App() {
           <Route path="/signin">
             <FieldForm
               title={"Войти"}
-              inputFields={[
-                { labelText: "Логин", name: "login" },
-                { labelText: "Пароль", name: "password" }
+              fields={[
+                { name: "login", type: "input", props: { labelText: "Логин" } },
+                { name: "password", type: "input", props: { labelText: "Пароль" } },
               ]}
               onOk={async (record, history) => { 
                 await dispatch(signInAsync(record["login"], record["password"]));
@@ -53,9 +53,9 @@ function App() {
           <Route path="/signup">
             <FieldForm
               title={"Создать пользователя"}
-              inputFields={[
-                { labelText: "Логин", name: "login" },
-                { labelText: "Пароль", name: "password" }
+              fields={[
+                { name: "login", type: "input", props: { labelText: "Логин" } },
+                { name: "password", type: "input", props: { labelText: "Пароль" } },
               ]}
               onOk={async (record, history) => { 
                 await dispatch(signUpAsync(record["login"], record["password"]));

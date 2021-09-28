@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addParticipant, createCampaign, createHobby, fetchCampaignMessages, fetchCampaigns, fetchHobbies, sendMessage } from './api';
-import { AppThunk, RootState } from './store';
+import { AppThunk } from './store';
 import { CampaignDto } from './models/campaign';
 import { HobbyDto } from './models/hobby';
 import { MessageDto } from './models/message';
@@ -9,13 +9,11 @@ import { MessageDto } from './models/message';
 export interface AppState {
   campaigns: CampaignDto[];
   hobbies: HobbyDto[];
-  campaignMessages: MessageDto[];
 }
 
 const initialState: AppState = {
   campaigns: [],
   hobbies: [],
-  campaignMessages: [],
 };
 
 export const loadCampaignsAsync = (): AppThunk => async (
@@ -39,38 +37,43 @@ export const loadCampaignMessagesAsync = (campaignId: string): AppThunk => async
   getState
 ) => {
   const campaignMessages = await fetchCampaignMessages(campaignId);
-  dispatch(setCampaignMessages(campaignMessages))
+  dispatch(setCampaignMessages({
+    campaignId: campaignId,
+    campaignMessages: campaignMessages
+  }))
 }
 
 export const sendMessageAsync = (userId: string, campaignId: string, text: string): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await sendMessage(userId, campaignId, text);
-  console.log(response.data);
+  await sendMessage(userId, campaignId, text);
 }
 
 export const createHobbyAsync = (name: string): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await createHobby(name);
-  console.log(response.data);
+  await createHobby(name);
 }
 
 export const addParticipantAsync = (userId: string, campaignId: string): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await addParticipant(userId, campaignId);
+  await addParticipant(userId, campaignId);
 }
 
 export const createCampaignAsync = (name: string, administratorId: string, hobbyIds: Array<string>): AppThunk => async (
   dispatch,
   getState
 ) => {
-  const response = await createCampaign(name, administratorId, hobbyIds);
-  console.log(response.data);
+  await createCampaign(name, administratorId, hobbyIds);
+}
+
+export interface ISetCampaignMessages {
+  campaignId: string;
+  campaignMessages: MessageDto[];
 }
 
 export const campaignSlice = createSlice({
@@ -83,17 +86,20 @@ export const campaignSlice = createSlice({
     setHobbies: (state, action: PayloadAction<HobbyDto[]>) => {
       state.hobbies = action.payload;
     },
-    setCampaignMessages: (state, action: PayloadAction<MessageDto[]>) => {
-      state.campaignMessages = action.payload;
+    setCampaignMessages: (state, action: PayloadAction<ISetCampaignMessages>) => {
+      let campaign = state.campaigns.find(campaign => campaign.id === action.payload.campaignId);
+
+      if (campaign === undefined) {
+        throw "При сохранении сообщений кампании не найдена кампания по идентификатору.";
+      }
+
+      action.payload.campaignMessages.sort((a, b) => a.created < b.created ? 1 : -1);
+
+      campaign.messages = action.payload.campaignMessages;
     }
   },
 });
 
 export const { setCampaigns, setHobbies, setCampaignMessages } = campaignSlice.actions;
-
-export const selectCampaigns: (state: RootState) => CampaignDto[] = state => state.main.campaigns;
-export const selectCampaign: (campaignId: string) => (state: RootState) => CampaignDto | undefined = campaignId => state => state.main.campaigns.find((campaign: any) => campaign["id"] === campaignId);
-export const selectCampaignMessages: (state: RootState) => MessageDto[] = state => state.main.campaignMessages;
-export const selectHobbies: (state: RootState) => HobbyDto[] = state => state.main.hobbies;
 
 export default campaignSlice.reducer;

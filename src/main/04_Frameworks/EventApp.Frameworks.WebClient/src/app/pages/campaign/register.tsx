@@ -3,11 +3,12 @@ import { FieldForm } from "../../components/organisms/FieldForm";
 import { Table } from "../../components/organisms/Table";
 import { RegisterContainer } from "../styles";
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { loadCampaignsAsync, loadCampaignMessagesAsync, createCampaignAsync, selectCampaigns } from '../../../app/slice';
+import { loadCampaignsAsync, loadCampaignMessagesAsync, createCampaignAsync } from '../../../app/slice';
 import { Popup } from "../../components/atoms/Popup";
 import { CampaignCard } from "./Card";
 import { useLocation } from "react-router-dom";
 import { selectAuthentication } from "../../modules/authentication/selectors";
+import { selectCampaigns, selectHobbies } from "../../selectors";
 
 export const CampaignRegister: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ export const CampaignRegister: React.FC = () => {
 
     const authentication = useAppSelector(selectAuthentication);
     const campaigns = useAppSelector(selectCampaigns);
+    const hobbies = useAppSelector(selectHobbies);
     const [campaignId, setCampaignId] = useState<string>("");
     const [isAddingCampaignPopupVisible, setAddingCampaignPopupVisibility] = useState<boolean>(false);
     const [isCardPopupVisible, setCardPopupVisibility] = useState<boolean>(false);
@@ -51,12 +53,12 @@ export const CampaignRegister: React.FC = () => {
             <Popup isVisible={isAddingCampaignPopupVisible}>
                 <FieldForm 
                     title={"Создание кампании"}
-                    inputFields={[
-                        { labelText: "Наименование", name: "name" },
-                        { labelText: "Идентификаторы хобби через \",\"", name: "hobbyIds" }
+                    fields={[
+                        { name: "name", type: "input", props: { labelText: "Наименование" } },
+                        { name: "hobbyIds", type: "select", props: { labelText: "Идентификаторы хобби", options: hobbies.map(hobby => ({ value: hobby.id, label: hobby.name })), isMultiple: true } },
                     ]}
                     onOk={async (records) => { 
-                        await dispatch(createCampaignAsync(records["name"], authentication.userId, records["hobbyIds"].split(",")));
+                        await dispatch(createCampaignAsync(records["name"], authentication.userId, records["hobbyIds"]));
                         await dispatch(loadCampaignsAsync());
                         setAddingCampaignPopupVisibility(false);
                     }}
