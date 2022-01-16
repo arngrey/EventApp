@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FieldForm } from "../../components/organisms/FieldForm";
-import { Table } from "../../components/organisms/Table";
+import { CommonTable } from "../../components/organisms/CommonTable";
 import { RegisterContainer } from "../styles";
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { loadCampaignsAsync, loadCampaignMessagesAsync, createCampaignAsync } from '../../../app/slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loadCampaignsAsync, loadCampaignMessagesAsync, createCampaignAsync } from '../../slice';
 import { Popup } from "../../components/atoms/Popup";
 import { CampaignCard } from "./Card";
 import { useLocation } from "react-router-dom";
@@ -31,7 +31,7 @@ export const CampaignRegister: React.FC = () => {
 
     return (
         <RegisterContainer>
-            <Table
+            <CommonTable
                 title={"Список кампаний"}
                 columnNames={["Идентификатор", "Наименование", "Участники", "Хобби"]}
                 rows={campaigns.map((campaign: any) => [
@@ -57,12 +57,21 @@ export const CampaignRegister: React.FC = () => {
                         { name: "name", type: "input", props: { labelText: "Наименование" } },
                         { name: "hobbyIds", type: "select", props: { labelText: "Идентификаторы хобби", options: hobbies.map(hobby => ({ value: hobby.id, label: hobby.name })), isMultiple: true } },
                     ]}
-                    onOk={async (records) => { 
-                        await dispatch(createCampaignAsync(records["name"], authentication.userId, records["hobbyIds"]));
-                        await dispatch(loadCampaignsAsync());
-                        setAddingCampaignPopupVisibility(false);
-                    }}
-                    onCancel={() => { setAddingCampaignPopupVisibility(false); }} />
+                    buttons={[
+                        { 
+                            text: "Создать", 
+                            onClick: async (records) => { 
+                                await dispatch(createCampaignAsync(records["name"], authentication.userId, records["hobbyIds"]));
+                                await dispatch(loadCampaignsAsync());
+                                setAddingCampaignPopupVisibility(false);
+                            }
+                        }, {
+                            text: "Отмена", 
+                            onClick: async (records) => { 
+                                setAddingCampaignPopupVisibility(false);
+                            }
+                        }
+                    ]} />
             </Popup>          
             <Popup isVisible={isCardPopupVisible}>
                  <CampaignCard

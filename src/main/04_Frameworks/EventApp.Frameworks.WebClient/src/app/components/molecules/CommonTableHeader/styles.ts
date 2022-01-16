@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const TableCellContainer = styled.div`
+export const CommonTableHeaderContainer = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
+    flex-direction: row;
     position: relative;
-    padding: 0.2rem;
+    font-weight: 600;
 `

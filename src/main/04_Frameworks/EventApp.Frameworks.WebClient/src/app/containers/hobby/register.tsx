@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { loadHobbiesAsync, createHobbyAsync } from '../../../app/slice';
-import { Table } from "../../../app/components/organisms/Table";
+import { CommonTable } from "../../components/organisms/CommonTable";
 import { RegisterContainer } from "../styles";
 import { FieldForm } from "../../../app/components/organisms/FieldForm";
 import { Popup } from "../../../app/components/atoms/Popup";
@@ -21,7 +21,7 @@ export const HobbyRegister: React.FC = () => {
 
     return (
         <RegisterContainer>
-            <Table
+            <CommonTable
                 title={"Список хобби"}
                 columnNames={["Идентификатор", "Наименование"]}
                 rows={hobbies.map((hobby: any) => [hobby.id, hobby.name])}
@@ -36,12 +36,21 @@ export const HobbyRegister: React.FC = () => {
                     fields={[
                         { name: "name", type: "input", props: { labelText: "Наименование" } },
                     ]}
-                    onOk={async (records) => { 
-                        await dispatch(createHobbyAsync(records["name"]));
-                        await dispatch(loadHobbiesAsync());
-                        setPopupVisibility(false);
-                    }}
-                    onCancel={() => { setPopupVisibility(false); }} /> 
+                    buttons={[
+                        { 
+                            text: "Создать", 
+                            onClick: async (records) => { 
+                                await dispatch(createHobbyAsync(records["name"]));
+                                await dispatch(loadHobbiesAsync());
+                                setPopupVisibility(false);
+                            }
+                        }, {
+                            text: "Отмена", 
+                            onClick: async (records) => { 
+                                setPopupVisibility(false);
+                            }
+                        }
+                    ]} /> 
             </Popup>
         </RegisterContainer>
 

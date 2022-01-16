@@ -7,11 +7,3 @@ export const AppContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
-
-export const TableFieldFormContainer = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: inherit;
-`

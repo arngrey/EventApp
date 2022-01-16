@@ -15,7 +15,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ isAuthenticated, ...
         ) :
         <Redirect 
             to={{ 
-                pathname: "/signin", 
+                pathname: "/welcome", 
                 state: { from: rest.location } 
             }} />
     

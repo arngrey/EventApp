@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export type TableRowContainerProps = {
+export type CommonTableRowContainerProps = {
     height: string;
 }
 
-export const TableRowContainer = styled.div<TableRowContainerProps>`
+export const CommonTableRowContainer = styled.div<CommonTableRowContainerProps>`
     height: ${props => props.height}
     width: 100%;
     display: flex;

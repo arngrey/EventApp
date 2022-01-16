@@ -1,11 +1,11 @@
 import React from "react";
 import { CommonTitle } from "../../atoms/CommonTitle";
-import { TableHeader } from "../../molecules/TableHeader";
-import { TableRow } from "../../molecules/TableRow";
+import { CommonTableHeader } from "../../molecules/CommonTableHeader";
+import { CommonTableRow } from "../../molecules/CommonTableRow";
 import { CommonButtonPanel, CommonButtonPanelProps } from "../../molecules/CommonButtonPanel";
-import { HeadersContainer, RowsContainer, TableContainer, TableTitleContainer} from "./styles";
+import { CommonHeadersContainer, CommonRowsContainer, CommonTableContainer, CommonTableTitleContainer} from "./styles";
 
-export type TableProps = {
+export type CommonTableProps = {
     title: string;
     columnNames: Array<string>;
     rows: Array<Array<string>>;
@@ -15,13 +15,13 @@ export type TableProps = {
     onRowClick?: (row: Array<string>) => void;
 }
 
-export const Table: React.FC<TableProps> = (props: TableProps) => {
+export const CommonTable: React.FC<CommonTableProps> = (props: CommonTableProps) => {
     return (
-        <TableContainer>
-            <TableTitleContainer>
+        <CommonTableContainer>
+            <CommonTableTitleContainer>
                 <CommonTitle 
                     text={props.title}/>
-            </TableTitleContainer>
+            </CommonTableTitleContainer>
             {
                 props.buttonPanel === undefined ?
                     undefined
@@ -29,21 +29,21 @@ export const Table: React.FC<TableProps> = (props: TableProps) => {
                         <CommonButtonPanel buttons={props.buttonPanel.buttons} />
                     )
             }
-            <HeadersContainer height={props.headersHeight}>
-                <TableHeader 
-                    columnNames={props.columnNames}></TableHeader>
-            </HeadersContainer>
-            <RowsContainer>
+            <CommonHeadersContainer height={props.headersHeight}>
+                <CommonTableHeader 
+                    columnNames={props.columnNames}></CommonTableHeader>
+            </CommonHeadersContainer>
+            <CommonRowsContainer>
                 {
                     props.rows.map((row, i) => (
-                        <TableRow
+                        <CommonTableRow
                             values={row}
                             containerProps={{ height: props.rowHeight }}
                             key={i}
-                            onClick={() => { props.onRowClick && props.onRowClick(row); }}></TableRow>
+                            onClick={() => { props.onRowClick && props.onRowClick(row); }}></CommonTableRow>
                     ))
                 }
-            </RowsContainer>
-        </TableContainer>
+            </CommonRowsContainer>
+        </CommonTableContainer>
     )
 }

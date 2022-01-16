@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TableContainer = styled.div`
+export const CommonTableContainer = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
@@ -13,7 +13,7 @@ export const TableContainer = styled.div`
     flex: 2;
 `
 
-export const RowsContainer = styled.div`
+export const CommonRowsContainer = styled.div`
     height: 100%;
     width: 100%;
     display: flex;
@@ -24,11 +24,11 @@ export const RowsContainer = styled.div`
     min-height: 10rem;
 `
 
-export type HeadersContainerProps = {
+export type CommonHeadersContainerProps = {
     height: string;
 }
 
-export const HeadersContainer = styled.div<HeadersContainerProps>`
+export const CommonHeadersContainer = styled.div<CommonHeadersContainerProps>`
     height: ${props => props.height};
     width: 100%;
     display: flex;
@@ -38,7 +38,7 @@ export const HeadersContainer = styled.div<HeadersContainerProps>`
     border-left: 1px solid black;
     border-right: 1px solid black;
 `
-export const TableTitleContainer = styled.div`
+export const CommonTableTitleContainer = styled.div`
     font-weight: 600;
     font-size: 1.3rem;
     display: flex;
@@ -46,7 +46,7 @@ export const TableTitleContainer = styled.div`
     margin-bottom: 0.5rem;
 `
 
-export const TableButtonsContainer = styled.div`
+export const CommonTableButtonsContainer = styled.div`
     display: flex;
     position: relative;
     margin-bottom: 0.5rem;

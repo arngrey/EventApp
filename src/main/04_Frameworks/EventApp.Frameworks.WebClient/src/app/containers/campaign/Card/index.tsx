@@ -3,7 +3,7 @@ import { CardContainer } from "../../styles";
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { loadCampaignsAsync, loadCampaignMessagesAsync, sendMessageAsync, addParticipantAsync } from '../../../slice';
 import { selectAuthentication } from '../../../modules/authentication/selectors';
-import { Table } from "../../../components/organisms/Table";
+import { CommonTable } from "../../../components/organisms/CommonTable";
 import { Popup } from "../../../components/atoms/Popup";
 import { CommonButtonPanel } from "../../../components/molecules/CommonButtonPanel";
 import { CommonTitle } from "../../../components/atoms/CommonTitle";
@@ -40,7 +40,7 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
                     text={`Кампания ${campaign.name}`} />
             </CardTitleContainer>
             <TableContainer>
-                <Table
+                <CommonTable
                     title={"Список сообщений кампании"}
                     columnNames={["Идентификатор", "Отправитель", "Текст"]}
                     rows={campaignMessages.map((campaignMessage: any) => [campaignMessage.id, campaignMessage.sender.login, campaignMessage.text])}
@@ -68,15 +68,24 @@ export const CampaignCard: React.FC<CampaignCardProps> = (props) => {
                     fields={[
                         { name: "text", type: "input", props: { labelText: "Текст" } },
                     ]}
-                    onOk={async (records) => {
-                        if (!authentication.isAuthenticated) {
-                            return;
+                    buttons={[
+                        { 
+                            text: "Отправить", 
+                            onClick: async (records) => { 
+                                if (!authentication.isAuthenticated) {
+                                    return;
+                                }
+                                await dispatch(sendMessageAsync(authentication.userId, props.campaignId, records["text"]));
+                                await dispatch(loadCampaignMessagesAsync(props.campaignId));
+                                setAddingMessagePopupVisibility(false);
+                            }
+                        }, {
+                            text: "Отмена", 
+                            onClick: async (records) => { 
+                                setAddingMessagePopupVisibility(false);
+                            }
                         }
-                        await dispatch(sendMessageAsync(authentication.userId, props.campaignId, records["text"]));
-                        await dispatch(loadCampaignMessagesAsync(props.campaignId));
-                        setAddingMessagePopupVisibility(false);
-                    }}
-                    onCancel={() => { setAddingMessagePopupVisibility(false); }} />
+                    ]} />
             </Popup>
         </CardContainer>
     )

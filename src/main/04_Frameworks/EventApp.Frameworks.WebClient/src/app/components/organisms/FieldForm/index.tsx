@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { CommonButtonProps } from "../../atoms/CommonButton";
 import { CommonTitle } from "../../atoms/CommonTitle";
 import { CommonButtonPanel } from "../../molecules/CommonButtonPanel";
 import { InputField, InputFieldProps } from "../../molecules/InputField";
@@ -24,17 +25,27 @@ export type InputFieldFormProps = FieldProps
     props: Omit<InputFieldProps, "onChange">
 }
 
+export type FieldFormButtonProps = 
+    Omit<CommonButtonProps, "onClick"> 
+    & { 
+        onClick: (record:any, history: any) => void; 
+    };
+
 
 export type FieldFormProps = {
     title: string;
-    fields: Array<SelectFieldFormProps | InputFieldFormProps>
-    onOk: (records: any, history: any) => void;
-    onCancel: () => void;
+    fields: Array<SelectFieldFormProps | InputFieldFormProps>;
+    buttons: Array<FieldFormButtonProps>;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
     const history = useHistory();
     const [fieldRecords, setFieldRecords] = useState<FieldRecords>({});
+    const buttons = props.buttons
+        .map(button => ({
+            ...button,
+            onClick: button.onClick.bind(null, fieldRecords)
+        }))
     
     return (
         <FieldFormContainer>
@@ -82,10 +93,7 @@ export const FieldForm: React.FC<FieldFormProps> = (props: FieldFormProps) => {
             }
             </FieldFormFieldsContainer>
             <CommonButtonPanel 
-                buttons={[
-                    { text: "Ок", onClick: () => { props.onOk(fieldRecords, history) } }, 
-                    { text: "Отмена", onClick: props.onCancel }
-                ]} />
+                buttons={buttons} />
         </FieldFormContainer>
     );
 }
